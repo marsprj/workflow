@@ -18,6 +18,7 @@ var Func = function(r, xmin, ymin, width, height, round){
 		"fill", "#f00",
 		"stroke", "#fff"
 	);
+	this._id = this._widget.id;
 
 	var that = this;
 	this._widget.hover(
@@ -32,21 +33,12 @@ var Func = function(r, xmin, ymin, width, height, round){
 
 extend(Func, Widget);
 
-Data.prototype.getType = function(){
-	alert(this._type);
-}
-
-
-Data.prototype.echo = function(){
-	alert("Data");
-}
-
-Data.prototype.showSnap = function(){
+Func.prototype.showSnap = function(){
 	
 	console.log("[Data]:show snap");
 }
 
-Data.prototype.hideSnap = function(){
+Func.prototype.hideSnap = function(){
 	console.log("[Data]:hide snap");	
 }
 

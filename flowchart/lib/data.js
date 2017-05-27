@@ -21,6 +21,7 @@ var Data = function(r, xmin, ymin, xmax, ymax){
 		"fill", "#0f0",
 		"stroke", "#fff"
 	);
+	this._id = this._widget.id;
 
 	var that = this;
 	this._widget.hover(
@@ -32,14 +33,20 @@ var Data = function(r, xmin, ymin, xmax, ymax){
 			}
 
 			var onmouseup = function(evt){
-
 				//重置连接状态为NONE
 				g_connect_state = CONNECT_STATE.NONE;
 				connection.remove();
 
-				var target = R.getElementByPoint(evt.pageX, evt.pageY);
+				var from = that;
+				var target = that._r.getElementByPoint(evt.pageX, evt.pageY);
 				if(target){
-					connection = new Arrow(R, start_x, start_y, evt.offsetX, evt.offsetY);
+					var manager = WidgetManager.getInstance();
+					var to = manager.getWidgetById(target.id);
+					if(from.getType() != to.getType()){
+						connection = new Connection(that._r, start_x, start_y, evt.offsetX, evt.offsetY);
+						connection.setFrom(from);
+						connection.setTo(target);	
+					}
 				}
 				else{
 					connection.remove();
@@ -54,7 +61,7 @@ var Data = function(r, xmin, ymin, xmax, ymax){
 				g_connect_state = CONNECT_STATE.CONNECTING;
 				start_x = evt.offsetX;
 				start_y = evt.offsetY;
-				connection = new Arrow(R, start_x, start_y, start_x, start_y);
+				connection = new Connection(that._r, start_x, start_y, start_x, start_y);
 
 				//注册鼠标移动事件
 				container.on("mousemove", onmousemove);
@@ -83,11 +90,6 @@ var Data = function(r, xmin, ymin, xmax, ymax){
 }
 
 extend(Data, Widget);
-
-Data.prototype.getType = function(){
-	alert(this._type);
-}
-
 
 Data.prototype.echo = function(){
 	alert("Data");

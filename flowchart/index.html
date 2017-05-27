@@ -35,6 +35,7 @@
 <script type="text/javascript" src="lib/widget.js"></script>
 <script type="text/javascript" src="lib/data.js"></script>
 <script type="text/javascript" src="lib/func.js"></script>
+<script type="text/javascript" src="lib/widgets.js"></script>
 
 <script type="text/javascript">
 	var input, output, func;
@@ -79,15 +80,22 @@
 	// })
 
 	function onAddInput(){
-		input = new Data(R, 100, 220, 200, 280);
+		//input = new Data(R, 100, 220, 200, 280);
+		//input = new Data(R, 100, 220, 200, 280);
+		var manager = WidgetManager.getInstance();
+		var input = manager.newDataWidget(R, 100, 220, 200, 280);
 	}
 
 	function onAddOutput(){
-		output = new Data(R, 650,220, 750, 280);
+		//output = new Data(R, 650,220, 750, 280);
+		var manager = WidgetManager.getInstance();
+		var input = manager.newDataWidget(R, 650,220, 750, 280);
 	}
 
 	function onAddFunction(){
-		func = new Func(R, 350, 225, 100, 60, 10);
+		//func = new Func(R, 350, 225, 100, 60, 10);
+		var manager = WidgetManager.getInstance();
+		var input = manager.newFuncWidget(R, 350, 225, 100, 60, 10);
 	}
 
 	function onDrag(){

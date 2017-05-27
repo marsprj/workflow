@@ -18,22 +18,22 @@ var Arrow = function(r, startx, starty, endx, endy){
 		endy += 2;
 	}
 
-	//style of connection
+	//style of arrow
 	this._stroke = {
 		color: "#0000FF",
-		width : 3,
+		width : 2,
 		linecap : "round"
 	};
 	this._arrow_end = "classic-wide-long";
 
-	//path of connection
+	//path of arrow
 	this._path = "M{sx} {sy}L{ex} {ey}"
 					.replace("{sx}", this._startx)
 					.replace("{sy}", this._starty)
 					.replace("{ex}", this._endx)
 					.replace("{ey}", this._endy);
 	console.log(this._path);
-	//create connection line object
+	//create arrow line object
 	this._line = this._r.path(this._path)
 						.attr({
 							"stroke" : this._stroke.color,
