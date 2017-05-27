@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#canvas{
+			width: 1000px;
+			height: 500px;
+			background-color: #eeeeee;
+		}
+	</style>
+	<title>flowchart</title>
+</head>
+<body>
+	<input type="button" value="Input" onclick="onAddInput()">
+	<input type="button" value="Output" onclick="onAddOutput()">
+	<input type="button" value="Function" onclick="onAddFunction()">
+	<br>
+	<input type="button" value="Drag" onclick="onDrag()">
+	<input type="button" value="Connect" onclick="onConnect()">
+	<div id="canvas">
+	<br>
+	
+	
+</body>
+</html>
+
+
+<script type="text/javascript" src="../lib/raphael.js"></script>
+<script type="text/javascript" src="../lib/raphael-draggable.js"></script>
+<script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+	var input, output, func;
+	//绘制链接线的状态
+	var STATE = {
+		DRAW : "draw",
+		CONNECT : "connect",
+		NONE : "none"
+	}
+	var CONNECT_STATE = {		
+		READY : "ready",
+		CONNECTING : "connecting",
+		NONE : "none"	
+	}
+	var g_state = STATE.CONNECT;
+	var g_connect_state = CONNECT_STATE.NONE;
+
+	//创建Raphael对象
+	var R = Raphael("canvas", 1000,600);
+	onAddInput();
+	onAddOutput();
+	onAddFunction();
+
+	// $("#canvas").mousemove(function(evt){
+		
+	// 	switch(g_connect_state){
+	// 		case  CONNECT_STATE.CONNECTING:{
+	// 			if(connection){
+	// 				connection_path = "M{sx} {sy}L{ex} {ey}"
+	// 							.replace("{sx}", start_x)
+	// 							.replace("{sy}", start_y)
+	// 							.replace("{ex}", evt.offsetX)
+	// 							.replace("{ey}", evt.offsetY);
+	// 				connection.attr({
+	// 					path: connection_path
+	// 				});
+	// 			}
+	// 		}
+	// 		break;
+	// 	}
+	// 	var i=0;
+	// })
+
+	function onAddInput(){
+		input = R.ellipse(150,250, 50, 30).attr(
+			"fill", "#0f0",
+			"stroke", "#fff"
+		);
+	}
+
+	function onAddOutput(){
+		output = R.ellipse(700,250, 50, 30).attr(
+			"fill", "#0f0",
+			"stroke", "#fff"
+		).hover(function(){
+			console.log("output in");
+		}, function(){
+			console.log("output out");
+		});
+	}
+
+	function onAddFunction(){
+		func = R.rect(350,225, 100, 60, 10).attr(
+			"fill", "#f00",
+			"stroke", "#fff"
+		).hover(function(){
+			console.log("func in");
+		}, function(){
+			console.log("func out");
+		});
+	}
+
+	function onDrag(){
+		var target = R.getElementByPoint(150,250);
+		alert(target);
+		// input.draggable();
+		// output.draggable();
+		// func.draggable();
+	}
+
+	function onConnect(){
+		input.undrag();
+		output.undrag();
+		func.undrag();
+	}
+
+</script>
+
+<script type="text/javascript" src="input.js"></script>
+<script type="text/javascript" src="func.js"></script>

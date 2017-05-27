@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#canvas{
+			left:0px;
+			right:0px;
+			top:0px;
+			bottom: :0px;
+			background-color: red;
+		}
+	</style>
+	
+	<title>Raphael:path</title>
+</head>
+<body>
+	<div id="canvas"></div>
+</body>
+</html>
+
+<script type="text/javascript" src="../lib/raphael.js"></script>
+<script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+
+	//这个函数扩展了Raphael的功能
+	(function(R) {
+	    R.el.draggable = function(move, start, up) {
+	        this._ui = this._ui || {};
+	 
+	        var that = this;
+	 
+	        this._ui.onMove = R.is(move, 'function') ?
+	        move : function(distanceX, distanceY, x, y, deltaX, deltaY) {
+	            that.translate(deltaX, deltaY);
+	        };
+	 
+	        this._ui.onStart = R.is(start, 'function') ? start : function(x, y) {
+	        };
+	 
+	        function onMove(distanceX, distanceY, x, y) {
+	            var deltaX = x - that._ui.lastX;
+	            var deltaY = y - that._ui.lastY;
+	            that._ui.lastX = x;
+	            that._ui.lastY = y;
+	            that._ui.onMove(distanceX, distanceY, x, y, deltaX, deltaY);
+	            that.paper.safari();
+	        };
+	 
+	        function onStart(x, y) {
+	            that._ui.lastX = x;
+	            that._ui.lastY = y;
+	            that._ui.onStart(x, y);
+	        };
+	 
+	        return this.drag(onMove, onStart, up);
+	    };
+	})(Raphael);
+
+
+	var R = Raphael("canvas", 400, 300);
+	R.rect(0, 0, 400, 300);
+ 
+	var p = R.path('M0 0L100 0L50 80');
+	 
+	p.attr({"fill":"green", 'opacity':0.5});
+	p.draggable();
+
+	// var R = Raphael("canvas", 400, 300);
+	// var p = R.path('M0 0L100 0L50 80Z');
+ 
+	// p.attr({"fill":"green", 'opacity':0.8});
+	 
+	// var start = function (x, y) {
+	//   this.attr({opacity: 1});
+	//   this.lastX = x;
+	//   this.lastY = y;
+	// },
+	// move = function (dx, dy, x, y) {
+	//   var deltaX = x - this.lastX;
+	//   var deltaY = y - this.lastY;
+	//   this.translate(deltaX, deltaY);
+	//   this.lastX = x;
+	//   this.lastY = y;
+	// },
+	// up = function () {
+	//   this.attr({opacity: 0.8});
+	// }; 
+	 
+	// p.drag(move, start, up);
+
+</script>

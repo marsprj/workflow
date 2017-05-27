@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#canvas{
+			width: 1000px;
+			height: 500px;
+			background-color: #eeeeee;
+		}
+	</style>
+	<title>flowchart</title>
+</head>
+<body>
+	<div id="canvas">
+</body>
+</html>
+
+
+<script type="text/javascript" src="../lib/raphael.js"></script>
+<script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	var line = null;
+	var start_x=0, start_y=0;
+
+	//创建Raphael对象
+	var R = Raphael("canvas", 1000,600);
+
+	$("#canvas").mousemove(function(evt){
+		
+		if(line==null){
+			start_x = evt.offsetX;
+			start_y = evt.offsetY;
+			var pts = "M{sx} {sy}L{ex} {ey}"
+						.replace("{sx}", start_x)
+						.replace("{sy}", start_y)
+						.replace("{ex}", evt.offsetX)
+						.replace("{ey}", evt.offsetY);
+			line = R.path(pts)
+					.attr({
+						"stroke" : "#FF0000",
+						"stroke-width" : 3
+					});
+		}
+		else{
+			var pts = "M{sx} {sy}L{ex} {ey}"
+						.replace("{sx}", start_x)
+						.replace("{sy}", start_y)
+						.replace("{ex}", evt.offsetX)
+						.replace("{ey}", evt.offsetY);
+			line.attr({
+				path: pts
+			});
+		}
+	})
+</script>
