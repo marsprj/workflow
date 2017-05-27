@@ -33,6 +33,7 @@ WidgetManager.prototype.getWidgetById = function(id){
 	return null;
 }
 
+
 WidgetManager.getInstance = function(){
 	if(this._instance==null){
 		this._instance = new WidgetManager();

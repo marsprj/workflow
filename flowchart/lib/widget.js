@@ -54,8 +54,29 @@ Widget.prototype.enableHover = function(){
 		function(evt){		//hover in
 			var container = $("#canvas");
 
-			var onmousemove = function(evt){	
-				connection.update(start_x, start_y, evt.offsetX, evt.offsetY);
+			var onmousemove = function(evt){
+
+				var from = that;
+				var target = that._r.getElementByPoint(evt.pageX, evt.pageY);
+				if(target){
+					var manager = WidgetManager.getInstance();
+					var to = manager.getWidgetById(target.id);
+					if(from.getType() != to.getType()){
+						var pos = to.findSnap(evt.offsetX, evt.offsetY);
+						if(pos){
+							connection.update(start_x, start_y, pos.x, pos.y);	
+						}
+						else{
+							connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
+						}
+					}
+					else{
+						connection.update(start_x, start_y, evt.offsetX, evt.offsetY);		
+					}
+				}
+				else{
+					connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
+				}				
 			}
 
 			var onmouseup = function(evt){
@@ -76,7 +97,14 @@ Widget.prototype.enableHover = function(){
 							alert("连接已经存在，不能重复添加");
 						}
 						else{
-							connection = new Connection(that._r, start_x, start_y, evt.offsetX, evt.offsetY);
+							var end_x = evt.offsetX;
+							var end_y = evt.offsetY;
+							var pos = to.findSnap(evt.offsetX, evt.offsetY);
+							if(pos){
+								end_x = pos.x;
+								end_y = pos.y;
+							}
+							connection = new Connection(that._r, start_x, start_y, end_x, end_y);
 							connection.setEnds(from,to);	
 							conManager.add(connection);
 
