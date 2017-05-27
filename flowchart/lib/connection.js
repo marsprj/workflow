@@ -7,6 +7,7 @@
  */
 var Connection = function(r, startx, starty, endx, endy){
 
+	this._id = "";
 	this._r = r;
 	this._arrow = new Arrow(r, startx, starty, endx, endy);
 
@@ -14,12 +15,14 @@ var Connection = function(r, startx, starty, endx, endy){
 	this._to   = null;
 }
 
-Connection.prototype.setFrom = function(from){
-	this._from = from;
+Connection.prototype.getID = function(){
+	return this._id;
 }
 
-Connection.prototype.setTo = function(to){
-	this._to = to;
+Connection.prototype.setEnds = function(from, to){
+	this._from = from;
+	this._to   = to;
+	this._id = this._from.getID() + "-" + this._to.getID();
 }
 
 Connection.prototype.update = function(startx, starty, endx, endy){

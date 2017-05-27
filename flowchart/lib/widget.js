@@ -40,6 +40,10 @@ Widget.prototype.getType = function(){
 	return this._type;
 }
 
+Widget.prototype.getID = function(){
+	return this._id;
+}
+
 Widget.prototype.echo = function(){
 	alert("Widget");
 }
@@ -65,9 +69,18 @@ Widget.prototype.enableHover = function(){
 					var manager = WidgetManager.getInstance();
 					var to = manager.getWidgetById(target.id);
 					if(from.getType() != to.getType()){
-						connection = new Connection(that._r, start_x, start_y, evt.offsetX, evt.offsetY);
-						connection.setFrom(from);
-						connection.setTo(target);	
+						var conManager = ConnectionManager.getInstance()
+						var id = conManager.makeID(from,to);
+						var f  = conManager.getConnectionById(id);
+						if(f){
+							alert("连接已经存在，不能重复添加");
+						}
+						else{
+							connection = new Connection(that._r, start_x, start_y, evt.offsetX, evt.offsetY);
+							connection.setEnds(from,to);	
+							conManager.add(connection);
+
+						}
 					}
 				}
 				else{
