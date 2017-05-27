@@ -7,14 +7,15 @@ input.hover(function(evt){
 	var start_x=0, start_y=0;
 
 	var onmousemove = function(evt){				
-		connection_path = "M{sx} {sy}L{ex} {ey}"
-					.replace("{sx}", start_x)
-					.replace("{sy}", start_y)
-					.replace("{ex}", evt.offsetX)
-					.replace("{ey}", evt.offsetY);
-		connection.attr({
-				path: connection_path
-			});
+		// connection_path = "M{sx} {sy}L{ex} {ey}"
+		// 			.replace("{sx}", start_x)
+		// 			.replace("{sy}", start_y)
+		// 			.replace("{ex}", evt.offsetX)
+		// 			.replace("{ey}", evt.offsetY);
+		// connection.attr({
+		// 		path: connection_path
+		// 	});
+		connection.update(start_x, start_y, evt.offsetX, evt.offsetY);
 
 		console.log("mouse move");
 	}
@@ -27,13 +28,14 @@ input.hover(function(evt){
 
 		var target = R.getElementByPoint(evt.pageX, evt.pageY);
 		if(target){
-			connection = R.path(connection_path)
-						.attr({
-							"stroke" : "#0000FF",
-							"stroke-width" : 3,
-							"stroke-linecapstring" : "round",
-							"arrow-end" : "classic-wide-long"
-						});
+			// connection = R.path(connection_path)
+			// 			.attr({
+			// 				"stroke" : "#0000FF",
+			// 				"stroke-width" : 3,
+			// 				"stroke-linecapstring" : "round",
+			// 				"arrow-end" : "classic-wide-long"
+			// 			});
+			connection = new Arrow(R, start_x, start_y, evt.offsetX, evt.offsetY);
 		}
 		else{
 			connection.remove();
@@ -48,18 +50,19 @@ input.hover(function(evt){
 		g_connect_state = CONNECT_STATE.CONNECTING;
 		start_x = evt.offsetX;
 		start_y = evt.offsetY;
-		connection_path = "M{sx} {sy}L{ex} {ey}"
-					.replace("{sx}", start_x)
-					.replace("{sy}", start_y)
-					.replace("{ex}", evt.offsetX)
-					.replace("{ey}", evt.offsetY);
-		connection = R.path(connection_path)
-						.attr({
-							"stroke" : "#0000FF",
-							"stroke-width" : 3,
-							"stroke-linecapstring" : "round",
-							"arrow-end" : "classic-wide-long"
-						});
+		// connection_path = "M{sx} {sy}L{ex} {ey}"
+		// 			.replace("{sx}", start_x)
+		// 			.replace("{sy}", start_y)
+		// 			.replace("{ex}", evt.offsetX)
+		// 			.replace("{ey}", evt.offsetY);
+		// connection = R.path(connection_path)
+		// 				.attr({
+		// 					"stroke" : "#0000FF",
+		// 					"stroke-width" : 3,
+		// 					"stroke-linecapstring" : "round",
+		// 					"arrow-end" : "classic-wide-long"
+		// 				});
+		connection = new Arrow(R, start_x, start_y, start_x, start_y);
 
 		//注册鼠标移动事件
 		container.on("mousemove", onmousemove);
