@@ -57,16 +57,22 @@ Widget.prototype.enableHover = function(){
 			var onmousemove = function(evt){
 
 				var from = that;
+				//获取鼠标处的Element
 				var target = that._r.getElementByPoint(evt.pageX, evt.pageY);
 				if(target){
 					var manager = WidgetManager.getInstance();
+					//获取Element所对应的Widget
 					var to = manager.getWidgetById(target.id);
 					if(from.getType() != to.getType()){
+						//相同类型的Widget不允许相连，例如两个Data连接起来没有意义
+						//寻找snap
 						var pos = to.findSnap(evt.offsetX, evt.offsetY);
 						if(pos){
+							//如果找到snap，则返回该snap的坐标，箭头自动连接到该snap
 							connection.update(start_x, start_y, pos.x, pos.y);	
 						}
 						else{
+							//否则，则用鼠标点出的坐标更新箭头。
 							connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
 						}
 					}
@@ -122,8 +128,11 @@ Widget.prototype.enableHover = function(){
 			var onmousedown = function(evt){
 
 				g_connect_state = CONNECT_STATE.CONNECTING;
-				start_x = evt.offsetX;
-				start_y = evt.offsetY;
+				// start_x = evt.offsetX;
+				// start_y = evt.offsetY;
+				var pos = that.findSnap(evt.offsetX, evt.offsetY);
+				start_x = pos.x;
+				start_y = pos.y;
 				connection = new Connection(that._r, start_x, start_y, start_x, start_y);
 
 				//注册鼠标移动事件
