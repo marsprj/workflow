@@ -113,12 +113,13 @@ Func.prototype.findSnap = function(x, y){
 		}
 	}
 
-	if((index<0) ||(mind>threhold)){
-		if(this._snap_highlight){
-			this._snap_highlight.remove();
-		}
-		return undefined;
-	}
+	//if((index<0) ||(mind>threhold)){
+	// if((index<0) ||(mind>threhold)){
+	// 	if(this._snap_highlight){
+	// 		this._snap_highlight.remove();
+	// 	}
+	// 	return undefined;
+	// }
 
 	if(this._snap_highlight){
 		this._snap_highlight.remove();
@@ -133,14 +134,4 @@ Func.prototype.findSnap = function(x, y){
 		x : s.x,
 		y : s.y
 	};
-}
-
-Func.prototype.getTargetSnap = function(x, y){
-	var xy = this.findSnap(x, y);
-	if(!xy){
-		return undefined;
-	}
-	
-
-	return xy;
 }
