@@ -6,17 +6,19 @@ var WidgetManager = function(){
 
 WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
 
-	var widget = new Data(r, xmin, ymin, xmax, ymax);
-	this._widgets.push(widget);
+	var widget = new Data(r, xmin, ymin, xmax, ymax);	
+	widget.enableHover();
 
+	this._widgets.push(widget);
 	return widget;
 }
 
 WidgetManager.prototype.newFuncWidget = function(r, xmin, ymin, width, height, round){
 
 	var widget = new Func(r, xmin, ymin, width, height, round);
-	this._widgets.push(widget);
+	widget.enableHover();
 
+	this._widgets.push(widget);
 	return widget;
 }
 
