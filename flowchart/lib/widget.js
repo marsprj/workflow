@@ -1,3 +1,13 @@
+function extend(c, p) {
+
+	var F = function(){};
+　　　　F.prototype = p.prototype;
+　　　　c.prototype = new F();
+　　　　c.prototype.constructor = c;
+　　　　c.uber = p.prototype;
+　
+}
+
 var Widget = function(r){
 
 	this._r = r;
@@ -161,13 +171,69 @@ Widget.prototype.enableHover = function(){
 	);
 }
 
+Widget.prototype.getSnapPos = function(){
+	
+}
 
-function extend(c, p) {
+Widget.prototype.showSnap = function(){
+	this._snapxy = this.getSnapPos();
+	
+	var that = this;
+	this._snaps.length = 0;
+	this._snapxy.forEach(function(s){
+		var c = that._r.circle(s.x, s.y, that._snap_r).attr({
+				"fill" : "#FFF",
+				"stroke" : "#0F0"
+			});		
+		that._snaps.push(c);
+	});
+}
 
-	var F = function(){};
-　　　　F.prototype = p.prototype;
-　　　　c.prototype = new F();
-　　　　c.prototype.constructor = c;
-　　　　c.uber = p.prototype;
-　
+Widget.prototype.hideSnap = function(){
+	if(this._snap_highlight){
+		this._snap_highlight.remove();
+	}
+	this._snaps.forEach(function(s){
+		s.remove();
+	})
+	this._snaps.length = 0;
+}
+
+Widget.prototype.findSnap = function(x, y){
+	var threhold = 20;
+
+	var length = this._snapxy.length;
+	var dist = 0;
+	var mind = 10000000;
+	var index = -1;
+	for(var i=0; i<length; i++){
+		var xy = this._snapxy[i];
+		dist = Math.abs(xy.x-x) + Math.abs(xy.y-y);
+		if(dist<mind){
+			index = i;
+			mind = dist;
+		}
+	}
+
+	//if((index<0) ||(mind>threhold)){
+	// if((index<0) ||(mind>threhold)){
+	// 	if(this._snap_highlight){
+	// 		this._snap_highlight.remove();
+	// 	}
+	// 	return undefined;
+	// }
+
+	if(this._snap_highlight){
+		this._snap_highlight.remove();
+	}
+	var s = this._snapxy[index];
+	this._snap_highlight = this._r.circle(s.x, s.y, this._snap_r).attr({
+				"fill" : "#00F",
+				"stroke" : "#0F0"
+			});	
+
+	return {
+		x : s.x,
+		y : s.y
+	};
 }

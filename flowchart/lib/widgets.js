@@ -6,7 +6,7 @@ var WidgetManager = function(){
 
 WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
 
-	var widget = new Data(r, xmin, ymin, xmax, ymax);	
+	var widget = new DataWidget(r, xmin, ymin, xmax, ymax);	
 	widget.enableHover();
 
 	this._widgets.push(widget);
@@ -15,7 +15,7 @@ WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
 
 WidgetManager.prototype.newFuncWidget = function(r, xmin, ymin, width, height, round){
 
-	var widget = new Func(r, xmin, ymin, width, height, round);
+	var widget = new FuncWidget(r, xmin, ymin, width, height, round);
 	widget.enableHover();
 
 	this._widgets.push(widget);
