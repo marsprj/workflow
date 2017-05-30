@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		#canvas{
+			width: 1000px;
+			height: 500px;
+			background-color: #eeeeee;
+		}
+	</style>
+	<title>flowchart</title>
+</head>
+<body onload="init();">
+	<input type="button" value="Input" onclick="onAddInput()">
+	<input type="button" value="Output" onclick="onAddOutput()">
+	<input type="button" value="Function" onclick="onAddFunction()">
+	<br>
+	<input type="button" value="Drag" onclick="onDrag()">
+	<input type="button" value="Connect" onclick="onConnect()">
+	<input type="button" value="Test" onclick="onTest()">
+	<input type="text" id="xy" size="30">
+	<div id="canvas"></div>
+	<br>
+	
+	
+</body>
+</html>
+
+
+<script type="text/javascript" src="../lib/raphael.js"></script>
+<script type="text/javascript" src="../lib/raphael-draggable.js"></script>
+<script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="lib/arrow.js"></script>
+<script type="text/javascript" src="lib/connection.js"></script>
+<script type="text/javascript" src="lib/connections.js"></script>
+<script type="text/javascript" src="lib/widget.js"></script>
+<script type="text/javascript" src="lib/datawidget.js"></script>
+<script type="text/javascript" src="lib/funcwidget.js"></script>
+<script type="text/javascript" src="lib/widgets.js"></script>
+
+<script type="text/javascript">
+	var input, output, func;
+	//绘制链接线的状态
+	var STATE = {
+		DRAW : "draw",
+		CONNECT : "connect",
+		NONE : "none"
+	}
+	var CONNECT_STATE = {		
+		READY : "ready",
+		CONNECTING : "connecting",
+		NONE : "none"	
+	}
+	var g_state = STATE.CONNECT;
+	var g_connect_state = CONNECT_STATE.NONE;
+
+	//创建Raphael对象
+	var R = Raphael("canvas", 1000,600);
+	initGraph();
+
+	function initGraph(){
+		var conManager = ConnectionManager.getInstance(); 
+		var manager = WidgetManager.getInstance();
+
+		var input_1_1 = manager.newDataWidget(R, 50, 50, 100, 50);
+		var input_1_2 = manager.newDataWidget(R, 50, 150, 100, 50);
+		var output_1  = manager.newDataWidget(R, 350, 100, 100, 50);
+		var func_1    = manager.newFuncWidget(R, 200, 100, 100, 50);
+		var conn_1_1  = conManager.createConnection(R, input_1_1, func_1);
+		var conn_1_2  = conManager.createConnection(R, input_1_2, func_1);
+		var conn_1_3  = conManager.createConnection(R, func_1, output_1);
+
+		var input_2_1 = manager.newDataWidget(R, 50, 300, 100, 50);
+		var func_2    = manager.newFuncWidget(R, 200, 300, 100, 50);
+		var output_2  = manager.newDataWidget(R, 350, 300, 100, 50);
+		var conn_2_1  = conManager.createConnection(R, input_2_1, func_2);
+		var conn_2_2  = conManager.createConnection(R, func_2, output_2);
+
+		var func_3    = manager.newFuncWidget(R, 600, 200, 100, 50);
+		var output_3  = manager.newDataWidget(R, 800, 200, 100, 50);
+		var conn_3_1  = conManager.createConnection(R, output_1, func_3);
+		var conn_3_2  = conManager.createConnection(R, output_2, func_3);
+		var conn_3_3  = conManager.createConnection(R, func_3, output_3);
+	}
+
+	function onAddOutput(){
+		//output = new Data(R, 650,220, 750, 280);
+		var manager = WidgetManager.getInstance();
+		var output = manager.newDataWidget(R, 650,220, 750, 280);
+	}
+
+	function onAddFunction(){
+		//func = new Func(R, 350, 225, 100, 60, 10);
+		var manager = WidgetManager.getInstance();
+		var func = manager.newFuncWidget(R, 350, 225, 100, 60, 10);
+	}
+
+	function onDrag(){
+		var target = R.getElementByPoint(150,250);
+		alert(target);
+		// input.draggable();
+		// output.draggable();
+		// func.draggable();
+	}
+
+	function onConnect(){
+		input.undrag();
+		output.undrag();
+		func.undrag();
+	}
+
+	function onTest(){
+		var data = new Data(R);
+		data.getType();
+		data.echo();
+	}
+
+	function init(){
+		$("#canvas").on("mousemove", onMouseMove);
+	}
+
+	function onMouseMove(evt){
+		document.getElementById("xy").value = evt.offsetX + "," + evt.offsetY;
+	}
+
+</script>
+
+<!-- <script type="text/javascript" src="input.js"></script>
+<script type="text/javascript" src="func.js"></script> -->
