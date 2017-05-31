@@ -31,7 +31,7 @@ Widget.prototype.draggable = function(){
 	var ex=0, ey=0;
 	var that = this;
 	var start = function(){
-
+		ex=0, ey=0;
 	};
 	var move = function(dx, dy){
 		if(that._shape){			
