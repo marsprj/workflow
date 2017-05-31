@@ -16,7 +16,6 @@
 	<br>
 	<input type="button" value="Drag" onclick="onDrag()">
 	<input type="button" value="Connect" onclick="onConnect()">
-	<input type="button" value="Test" onclick="onTest()">
 	<div id="canvas"></div>
 	<br>
 	
@@ -82,24 +81,13 @@
 	}
 
 	function onDrag(){		
-		//graph.draggable();
-		input_2_1.draggable();
+		graph.draggable();
+		//input_2_1.draggable();
 	}
 
 	function onConnect(){
-		//graph.undrag();
-		input_2_1.undrag();
-	}
-
-	function onTest(){
-		c = R.rect(200, 200, 40, 40).attr({
-		            fill: "hsb(.8, 1, 1)",
-		            stroke: "none",
-		            opacity: .5,
-		            cursor: "move"
-		        });
-		c.draggable();
-
+		graph.undrag();
+		//input_2_1.undrag();
 	}
 
 </script>

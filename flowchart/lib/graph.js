@@ -67,7 +67,7 @@ Graph.prototype.undrag = function(){
 
 	var data = this.getData();
 	data.forEach(function(d){
-		e.undrag();
+		d.undrag();
 	})
 
 	var funcs = this.getFunctions();
