@@ -25,6 +25,22 @@ Connection.prototype.setEnds = function(from, to){
 	this._id = this._from.getID() + "-" + this._to.getID();
 }
 
+Connection.prototype.setFrom = function(from){
+	this._from = from;
+}
+
+Connection.prototype.getFrom = function(){
+	return this._from;
+}
+
+Connection.prototype.setTo = function(to){
+	this._to = to;
+}
+
+Connection.prototype.getTo = function(){
+	return this._to;
+}
+
 Connection.prototype.update = function(startx, starty, endx, endy){
 
 	if(this._arrow){

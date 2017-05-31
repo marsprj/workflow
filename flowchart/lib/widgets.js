@@ -7,7 +7,7 @@ var WidgetManager = function(){
 WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
 
 	var widget = new DataWidget(r, xmin, ymin, xmax, ymax);	
-	widget.enableHover();
+	//widget.enableHover();
 
 	this._widgets.push(widget);
 	return widget;
@@ -16,16 +16,23 @@ WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
 WidgetManager.prototype.newFuncWidget = function(r, xmin, ymin, width, height, round){
 
 	var widget = new FuncWidget(r, xmin, ymin, width, height, round);
-	widget.enableHover();
+	//widget.enableHover();
 
 	this._widgets.push(widget);
 	return widget;
 }
 
+WidgetManager.prototype.newProjectWidget = function(r, xmin, ymin, width, height){
+	
+}
+
 WidgetManager.prototype.getWidgetById = function(id){
 	var len = this._widgets.length;
 	for(var i=0; i<len; i++){
-		if(this._widgets[i]._id == id){
+		var wid = this._widgets[i].getID();
+		console.log(wid);
+		
+		if(this._widgets[i].getID() == id){
 			return this._widgets[i];
 		}
 	}

@@ -55,7 +55,12 @@ ConnectionManager.prototype.createConnection = function(r, from, to){
 	var ce = t_snaps[t];
 
 	var connection = new Connection(r, cs.x, cs.y, ce.x, ce.y);
+
+	connection.setFrom(from);
+	connection.setTo(to);
+
 	this._connections.push(connection);
+	return connection;
 }
 
 ConnectionManager.prototype.makeID = function(from, to){

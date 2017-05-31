@@ -32,7 +32,7 @@ var Arrow = function(r, startx, starty, endx, endy){
 					.replace("{sy}", this._starty)
 					.replace("{ex}", this._endx)
 					.replace("{ey}", this._endy);
-	console.log(this._path);
+	//console.log(this._path);
 	//create arrow line object
 	this._line = this._r.path(this._path)
 						.attr({
@@ -55,7 +55,7 @@ Arrow.prototype.update = function(startx, starty, endx, endy){
 					.replace("{sy}", this._starty)
 					.replace("{ex}", this._endx)
 					.replace("{ey}", this._endy);
-	console.log(this._path);
+	//console.log(this._path);
 	this._line.attr({
 				path: this._path
 			});
