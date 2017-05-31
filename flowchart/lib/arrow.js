@@ -61,6 +61,39 @@ Arrow.prototype.update = function(startx, starty, endx, endy){
 			});
 }
 
+Arrow.prototype.offsetStart = function(dx, dy){
+
+	this._startx += dx;
+	this._starty += dy;
+
+	this._path = "M{sx} {sy}L{ex} {ey}"
+					.replace("{sx}", this._startx)
+					.replace("{sy}", this._starty)
+					.replace("{ex}", this._endx)
+					.replace("{ey}", this._endy);
+	//console.log(this._path);
+	this._line.attr({
+				path: this._path
+			});
+}
+
+Arrow.prototype.offsetEnd = function(dx, dy){
+
+	this._endx   += dx;
+	this._endy   += dy;
+
+	this._path = "M{sx} {sy}L{ex} {ey}"
+					.replace("{sx}", this._startx)
+					.replace("{sy}", this._starty)
+					.replace("{ex}", this._endx)
+					.replace("{ey}", this._endy);
+	//console.log(this._path);
+	this._line.attr({
+				path: this._path
+			});
+}
+
+
 Arrow.prototype.remove = function(){
 	if(this._line){
 		this._line.remove();

@@ -48,6 +48,20 @@ Connection.prototype.update = function(startx, starty, endx, endy){
 	}
 }
 
+Connection.prototype.offsetStart = function(dx, dy){
+
+	if(this._arrow){
+		this._arrow.offsetStart(dx, dy);
+	}
+}
+
+Connection.prototype.offsetEnd = function(dx, dy){
+
+	if(this._arrow){
+		this._arrow.offsetEnd(dx, dy);
+	}
+}
+
 Connection.prototype.remove = function(){
 	if(this._arrow){
 		this._arrow.remove();

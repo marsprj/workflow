@@ -96,6 +96,7 @@ Ellipse.prototype.moveTo = function(x, y){
 }
 
 Ellipse.prototype.offset = function(dx, dy){
+	//移动Node本身
 	if(this._shape){
 		var ox = this._shape.attr("cx");
 		var oy = this._shape.attr("cy");
@@ -115,7 +116,7 @@ Ellipse.prototype.offset = function(dx, dy){
 		this._a = Math.abs(this._xmax - this._xmin) / 2;
 		this._b = Math.abs(this._ymax - this._ymin) / 2;
 	}
-
+	//移动文字
 	if(this._text){
 		var cx = (this._xmin + this._xmax) / 2;
 		var cy = (this._ymin + this._ymax) / 2;

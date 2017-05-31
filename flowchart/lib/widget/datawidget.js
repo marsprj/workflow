@@ -48,6 +48,18 @@ DataWidget.prototype.getTo = function(){
 	return null;
 }
 
+DataWidget.prototype.offset = function(dx, dy){
+	if(this._shape){
+		this._shape.offset(dx, dy);
+	}
+	if(this._from){
+		this._from.offsetEnd(dx, dy);
+	}
+	if(this._to){
+		this._to.offsetStart(dx, dy);
+	}
+}
+
 // DataWidget.prototype.draggable = function(){
 
 // 	// var ox, oy;

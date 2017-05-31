@@ -35,7 +35,8 @@ Widget.prototype.draggable = function(){
 	};
 	var move = function(dx, dy){
 		if(that._shape){			
-			that._shape.offset(dx-ex, dy-ey);
+			//that._shape.offset(dx-ex, dy-ey);
+			that.offset(dx-ex, dy-ey);
 		}
 		ex = dx;
 		ey = dy;

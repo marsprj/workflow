@@ -56,30 +56,16 @@ FuncWidget.prototype.getOutput = function(){
 	return null;
 }
 
-// FuncWidget.prototype.draggable = function(){
-// 	// var ox, oy; 
-// 	var ex=0, ey=0;
-// 	var nowX, nowY;
-// 	var that = this;
-// 	var start = function(){
-// 		// ox = this.attr("x");
-// 		// oy = this.attr("y");
-// 	};
-// 	var move = function(dx, dy){
-// 		if(that._shape){			
-// 			that._shape.offset(dx-ex, dy-ey);
-// 		}
-// 		ex = dx;
-// 		ey = dy;
-// 	}
-// 	var end = function(){
 
-// 	}
+FuncWidget.prototype.offset = function(dx, dy){
+	if(this._shape){
+		this._shape.offset(dx, dy);
+	}
 
-// 	if(this._shape){
-// 		var element = this._shape.getElement();
-// 		if(element){
-// 			element.drag(move, start, end);
-// 		}
-// 	}
-// }
+	this._inputs.forEach(function(c){
+		c.offsetEnd(dx, dy);
+	})
+	if(this._output){
+		this._output.offsetStart(dx, dy);
+	}
+}
