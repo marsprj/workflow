@@ -9,8 +9,8 @@ var FuncWidget = function(r, xmin, ymin, width, height){
 	this._output = null;
 
 	this._shape = new Rect(r, xmin, ymin, width, height);
-	this._shape.initListener();
-	this._shape.enableHover();
+	//this._shape.initListener();
+	//this._shape.enableHover();
 	this._shape.showText();
 }
 
@@ -55,3 +55,31 @@ FuncWidget.prototype.getOutput = function(){
 	}
 	return null;
 }
+
+// FuncWidget.prototype.draggable = function(){
+// 	// var ox, oy; 
+// 	var ex=0, ey=0;
+// 	var nowX, nowY;
+// 	var that = this;
+// 	var start = function(){
+// 		// ox = this.attr("x");
+// 		// oy = this.attr("y");
+// 	};
+// 	var move = function(dx, dy){
+// 		if(that._shape){			
+// 			that._shape.offset(dx-ex, dy-ey);
+// 		}
+// 		ex = dx;
+// 		ey = dy;
+// 	}
+// 	var end = function(){
+
+// 	}
+
+// 	if(this._shape){
+// 		var element = this._shape.getElement();
+// 		if(element){
+// 			element.drag(move, start, end);
+// 		}
+// 	}
+// }

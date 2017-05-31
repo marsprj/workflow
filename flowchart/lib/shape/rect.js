@@ -60,3 +60,52 @@ Rect.prototype.getSnapPos = function(){
 		{ x: 	xmax		 	 ,	y: 	this._ymin + sy*3}
 	];
 }
+
+Rect.prototype.moveTo = function(x, y){
+	if(this._shape){
+		this._shape.attr({
+			x : x,
+			y : y
+		});
+		var bbox = this._shape.getBBox();
+		this._xmin = bbox.x;
+		this._ymin = bbox.y;
+		this._xmax = bbox.x + bbox.width;
+		this._ymax = bbox.y + bbox.height;
+	}
+
+	if(this._text){
+		var cx = (this._xmin + this._xmax) / 2;
+		var cy = (this._ymin + this._ymax) / 2;
+		this._text.attr({
+			x : cx,
+			y : cy
+		});	
+	}
+}
+
+Rect.prototype.offset = function(dx, dy){
+	if(this._shape){
+		var ox = this._shape.attr("x");
+		var oy = this._shape.attr("y");
+
+		this._shape.attr({
+			x : ox + dx,
+			y : oy + dy
+ 		});
+		var bbox = this._shape.getBBox();
+		this._xmin = bbox.x;
+		this._ymin = bbox.y;
+		this._xmax = bbox.x + bbox.width;
+		this._ymax = bbox.y + bbox.height;
+	}
+
+	if(this._text){
+		var cx = (this._xmin + this._xmax) / 2;
+		var cy = (this._ymin + this._ymax) / 2;
+		this._text.attr({
+			x : cx,
+			y : cy
+		});	
+	}
+}

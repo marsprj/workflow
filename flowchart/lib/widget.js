@@ -26,9 +26,35 @@ var Widget = function(r){
 	this._shape = null;
 }
 
+Widget.prototype.draggable = function(){
+
+	var ex=0, ey=0;
+	var that = this;
+	var start = function(){
+
+	};
+	var move = function(dx, dy){
+		if(that._shape){			
+			that._shape.offset(dx-ex, dy-ey);
+		}
+		ex = dx;
+		ey = dy;
+	}
+	var end = function(){
+
+	}
+
+	if(this._shape){
+		var element = this._shape.getElement();
+		if(element){
+			element.drag(move, start, end);
+		}
+	}
+}
+
 Widget.prototype.undrag = function(){
-	if(this._widget){
-		this._widget.undrag();
+	if(this._shape){
+		this._shape.undrag();
 	}
 }
 

@@ -8,8 +8,8 @@ var DataWidget = function(r, xmin, ymin, width, height){
 	this._shape = new Ellipse(r, xmin, ymin, width, height);
 	this._id = this._shape.getID();
 
-	this._shape.initListener();
-	this._shape.enableHover();
+	//this._shape.initListener();
+	//this._shape.enableHover();
 	this._shape.showText();
 
 	this._from = null;
@@ -47,3 +47,31 @@ DataWidget.prototype.getTo = function(){
 	}
 	return null;
 }
+
+// DataWidget.prototype.draggable = function(){
+
+// 	// var ox, oy;
+// 	var nowX, nowY;
+// 	var that = this;
+// 	var start = function(){
+// 		// ox = this.attr("cx");
+// 		// oy = this.attr("cy");
+// 	};
+// 	var move = function(dx, dy){
+// 		if(that._shape){			
+// 			that._shape.offset(dx-ex, dy-ey);
+// 		}
+// 		ex = dx;
+// 		ey = dy;
+// 	}
+// 	var end = function(){
+
+// 	}
+
+// 	if(this._shape){
+// 		var element = this._shape.getElement();
+// 		if(element){
+// 			element.drag(move, start, end);
+// 		}
+// 	}
+// }

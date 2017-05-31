@@ -11,7 +11,7 @@ DatumManager.prototype.createDatumNode = function(r, xmin, ymin, xmax, ymax){
 	return datum;
 }
 
-DatumManager.prototype.getData = function(){
+DatumManager.prototype.getNodes = function(){
 	return this._nodes;
 }
 

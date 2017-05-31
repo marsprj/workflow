@@ -4,7 +4,7 @@ var WidgetManager = function(){
 	this._widgets = [];
 }
 
-WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
+WidgetManager.prototype.createDataNode = function(r, xmin, ymin, xmax, ymax){
 
 	var widget = new DataWidget(r, xmin, ymin, xmax, ymax);	
 	//widget.enableHover();
@@ -13,17 +13,13 @@ WidgetManager.prototype.newDataWidget = function(r, xmin, ymin, xmax, ymax){
 	return widget;
 }
 
-WidgetManager.prototype.newFuncWidget = function(r, xmin, ymin, width, height, round){
+WidgetManager.prototype.createFuncNode = function(r, xmin, ymin, width, height, round){
 
 	var widget = new FuncWidget(r, xmin, ymin, width, height, round);
 	//widget.enableHover();
 
 	this._widgets.push(widget);
 	return widget;
-}
-
-WidgetManager.prototype.newProjectWidget = function(r, xmin, ymin, width, height){
-	
 }
 
 WidgetManager.prototype.getWidgetById = function(id){

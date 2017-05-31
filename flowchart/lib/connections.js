@@ -63,6 +63,10 @@ ConnectionManager.prototype.createConnection = function(r, from, to){
 	return connection;
 }
 
+ConnectionManager.prototype.getConnections = function(){
+	return this._connections;
+}
+
 ConnectionManager.prototype.makeID = function(from, to){
 	if(from && to){
 		return from.getID() + "-" + to.getID();

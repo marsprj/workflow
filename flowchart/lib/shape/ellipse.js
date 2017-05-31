@@ -25,6 +25,9 @@ var Ellipse = function(r, xmin, ymin, width, height){
 		"stroke", "#fff"
 	);
 	this._id = this._shape.id;
+
+	var cx = this._shape.attr("cx");
+	console.log(cx);
 }
 
 extend(Ellipse, Shape);
@@ -67,4 +70,58 @@ Ellipse.prototype.getSnapPos = function(){
 
 Ellipse.prototype.getEllipseY = function(x){
 	return Math.sqrt(( 1- Math.pow(((x-this._centerx)/this._a), 2) ) * Math.pow(this._b, 2));
+}
+
+Ellipse.prototype.moveTo = function(x, y){
+	if(this._shape){
+		this._shape.attr({
+			cx : x,
+			cy : y
+		});
+		var bbox = this._shape.getBBox();
+		this._xmin = bbox.x;
+		this._ymin = bbox.y;
+		this._xmax = bbox.x + bbox.width;
+		this._ymax = bbox.y + bbox.height;
+	}
+
+	if(this._text){
+		var cx = (this._xmin + this._xmax) / 2;
+		var cy = (this._ymin + this._ymax) / 2;
+		this._text.attr({
+			x : cx,
+			y : cy
+		});	
+	}
+}
+
+Ellipse.prototype.offset = function(dx, dy){
+	if(this._shape){
+		var ox = this._shape.attr("cx");
+		var oy = this._shape.attr("cy");
+
+		this._shape.attr({
+			cx : ox + dx,
+			cy : oy + dy
+ 		});
+		var bbox = this._shape.getBBox();
+		this._xmin = bbox.x;
+		this._ymin = bbox.y;
+		this._xmax = bbox.x + bbox.width;
+		this._ymax = bbox.y + bbox.height;
+
+		this._centerx = (this._xmin + this._xmax) / 2;
+		this._centery = (this._ymin + this._ymax) / 2;
+		this._a = Math.abs(this._xmax - this._xmin) / 2;
+		this._b = Math.abs(this._ymax - this._ymin) / 2;
+	}
+
+	if(this._text){
+		var cx = (this._xmin + this._xmax) / 2;
+		var cy = (this._ymin + this._ymax) / 2;
+		this._text.attr({
+			x : cx,
+			y : cy
+		});	
+	}
 }

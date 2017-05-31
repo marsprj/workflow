@@ -1,6 +1,7 @@
 var Shape = function(r){
 	this._r = r;
 	this._shape = null;
+	this._text  = null;
 
 	this._xmin = 0;
 	this._ymin = 0;
@@ -28,6 +29,16 @@ Shape.prototype.hideSnap = function(){
 
 Shape.prototype.getID = function(){
 	return this._shape ? this._shape.id : "";
+}
+
+Shape.prototype.getElement = function(){
+	return this._shape;
+}
+
+Shape.prototype.draggable = function(){
+	if(this._shape){
+		this._shape.draggable();
+	}
 }
 
 Shape.prototype.undrag = function(){
@@ -68,7 +79,7 @@ Shape.prototype.showText = function(){
 	var text = this._shape.id;
 	var cx = (this._xmin + this._xmax) / 2;
 	var cy = (this._ymin + this._ymax) / 2;
-	this._r.text(cx, cy, text);
+	this._text = this._r.text(cx, cy, text);
 }
 
 Shape.prototype.findSnap = function(x, y){
@@ -249,3 +260,4 @@ Shape.prototype.enableHover = function(){
 		}
 	);
 }
+

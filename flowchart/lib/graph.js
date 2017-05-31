@@ -43,14 +43,14 @@ Graph.prototype.getWorkflowText = function(){
 }
 
 Graph.prototype.draggable = function(){
-	var edges = this.getEdges();
-	edges.forEach(function(e){
-		e.draggable();
-	})
+	// var edges = this.getEdges();
+	// edges.forEach(function(e){
+	// 	e.draggable();
+	// })
 
 	var data = this.getData();
 	data.forEach(function(d){
-		e.draggable();
+		d.draggable();
 	})
 
 	var funcs = this.getFunctions();
@@ -60,10 +60,10 @@ Graph.prototype.draggable = function(){
 }
 
 Graph.prototype.undrag = function(){
-	var edges = this.getEdges();
-	edges.forEach(function(e){
-		e.undrag();
-	})
+	// var edges = this.getEdges();
+	// edges.forEach(function(e){
+	// 	e.undrag();
+	// })
 
 	var data = this.getData();
 	data.forEach(function(d){
