@@ -56,118 +56,37 @@ DataWidget.prototype.echo = function(){
 }
 
 DataWidget.prototype.getSnapPos = function(){
-	var sx = Math.abs(this._xmax - this._xmin) / 4;
-	var sy = Math.abs(this._ymax - this._ymin) / 4;
+	var sx = Math.abs(this._xmax - this._xmin) / 6;
+	var sy = Math.abs(this._ymax - this._ymin) / 6;
+	var y1 = this.getEllipseY(this._xmin + sx*1);
+	var y2 = this.getEllipseY(this._xmin + sx*2);
+	var y3 = this.getEllipseY(this._xmin + sx*3);
+	var y4 = this.getEllipseY(this._xmin + sx*4);
+	var y5 = this.getEllipseY(this._xmin + sx*5);
 
 	return [
 		//{ x: 	this._xmin		 ,	y: 	this._ymin},
-		{ x: 	this._xmin + sx*1,	y: 	this._ymin},
-		{ x: 	this._xmin + sx*2,	y: 	this._ymin},
-		{ x: 	this._xmin + sx*3,	y: 	this._ymin},
-		//{ x: 	this._xmax		 	 ,	y: 	this._ymin},
+		{ x: 	this._xmin		 ,	y: 	this._centery},
+		{ x: 	this._xmin + sx*1,	y: 	this._centery - y1},
+		{ x: 	this._xmin + sx*1,	y: 	this._centery + y1},
 
-		//{ x: 	this._xmin		 ,	y: 	this._ymax},
-		{ x: 	this._xmin + sx*1,	y: 	this._ymax},
-		{ x: 	this._xmin + sx*2,	y: 	this._ymax},
-		{ x: 	this._xmin + sx*3,	y: 	this._ymax},
-		//{ x: 	this._xmax		 	 ,	y: 	this._ymax},
+		{ x: 	this._xmin + sx*2,	y: 	this._centery - y2},
+		{ x: 	this._xmin + sx*2,	y:  this._centery + y2},
 
-		{ x: 	this._xmin		 ,	y: 	this._ymin + sy},
-		{ x: 	this._xmin		 ,	y: 	this._ymin + sy*2},
-		{ x: 	this._xmin		 ,	y: 	this._ymin + sy*3},
+		{ x: 	this._xmin + sx*3,	y: 	this._centery - y3},
+		{ x: 	this._xmin + sx*3,	y:  this._centery + y3},
+		
+		{ x: 	this._xmin + sx*4,	y: 	this._centery - y4},
+		{ x: 	this._xmin + sx*4,	y:  this._centery + y4},
 
-		{ x: 	this._xmax		 	 ,	y: 	this._ymin + sy},
-		{ x: 	this._xmax		 	 ,	y: 	this._ymin + sy*2},
-		{ x: 	this._xmax		 	 ,	y: 	this._ymin + sy*3}
+		{ x: 	this._xmin + sx*5,	y: 	this._centery - y5},
+		{ x: 	this._xmin + sx*5,	y:  this._centery + y5},
+
+		{ x: 	this._xmax		 ,	y: 	this._centery},
+
 	];
 }
 
-// DataWidget.prototype.showSnap = function(){
-// 	// var sx = Math.abs(this._xmax - this._xmin) / 4;
-// 	// var sy = Math.abs(this._ymax - this._ymin) / 4;
-// 	// var this._xmax = this._xmax;
-// 	// var this._ymax = this._ymax;
-
-// 	this._snapsxy = this.getSnapPos();
-
-// 	this._snapxy = [
-// 		//{ x: 	this._xmin		 ,	y: 	this._ymin},
-// 		{ x: 	this._xmin + sx*1,	y: 	this._ymin},
-// 		{ x: 	this._xmin + sx*2,	y: 	this._ymin},
-// 		{ x: 	this._xmin + sx*3,	y: 	this._ymin},
-// 		//{ x: 	this._xmax		 	 ,	y: 	this._ymin},
-
-// 		//{ x: 	this._xmin		 ,	y: 	this._ymax},
-// 		{ x: 	this._xmin + sx*1,	y: 	this._ymax},
-// 		{ x: 	this._xmin + sx*2,	y: 	this._ymax},
-// 		{ x: 	this._xmin + sx*3,	y: 	this._ymax},
-// 		//{ x: 	this._xmax		 	 ,	y: 	this._ymax},
-
-// 		{ x: 	this._xmin		 ,	y: 	this._ymin + sy},
-// 		{ x: 	this._xmin		 ,	y: 	this._ymin + sy*2},
-// 		{ x: 	this._xmin		 ,	y: 	this._ymin + sy*3},
-
-// 		{ x: 	this._xmax		 	 ,	y: 	this._ymin + sy},
-// 		{ x: 	this._xmax		 	 ,	y: 	this._ymin + sy*2},
-// 		{ x: 	this._xmax		 	 ,	y: 	this._ymin + sy*3}
-// 	];
-
-// 	var that = this;
-// 	this._snaps.length = 0;
-// 	this._snapxy.forEach(function(s){
-// 		var c = that._r.circle(s.x, s.y, that._snap_r).attr({
-// 				"fill" : "#FFF",
-// 				"stroke" : "#0F0"
-// 			});		
-// 		that._snaps.push(c);
-// 	});
-// }
-
-// DataWidget.prototype.hideSnap = function(){
-// 	if(this._snap_highlight){
-// 		this._snap_highlight.remove();
-// 	}
-// 	this._snaps.forEach(function(s){
-// 		s.remove();
-// 	})
-// 	this._snaps.length = 0;
-// }
-
-// DataWidget.prototype.findSnap = function(x, y){
-// 	var threhold = 20;
-
-// 	var length = this._snapxy.length;
-// 	var dist = 0;
-// 	var mind = 10000000;
-// 	var index = -1;
-// 	for(var i=0; i<length; i++){
-// 		var xy = this._snapxy[i];
-// 		dist = Math.abs(xy.x-x) + Math.abs(xy.y-y);
-// 		if(dist<mind){
-// 			index = i;
-// 			mind = dist;
-// 		}
-// 	}
-
-// 	//if((index<0) ||(mind>threhold)){
-// 	// if((index<0) ||(mind>threhold)){
-// 	// 	if(this._snap_highlight){
-// 	// 		this._snap_highlight.remove();
-// 	// 	}
-// 	// 	return undefined;
-// 	// }
-
-// 	if(this._snap_highlight){
-// 		this._snap_highlight.remove();
-// 	}
-// 	var s = this._snapxy[index];
-// 	this._snap_highlight = this._r.circle(s.x, s.y, this._snap_r).attr({
-// 				"fill" : "#00F",
-// 				"stroke" : "#0F0"
-// 			});	
-
-// 	return {
-// 		x : s.x,
-// 		y : s.y
-// 	};
-// }
+DataWidget.prototype.getEllipseY = function(x){
+	return Math.sqrt(( 1- Math.pow(((x-this._centerx)/this._a), 2) ) * Math.pow(this._b, 2));
+}
