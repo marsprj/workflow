@@ -19,14 +19,14 @@ var NODE_TYPE = {
 }
 
 
-var Widget = function(r){
+var Node = function(r){
 
 	this._r = r;
 	this._type = WIDGET_TYPE.DATA;
 	this._shape = null;
 }
 
-Widget.prototype.draggable = function(){
+Node.prototype.draggable = function(){
 
 	var ex=0, ey=0;
 	var that = this;
@@ -53,36 +53,36 @@ Widget.prototype.draggable = function(){
 	}
 }
 
-Widget.prototype.undrag = function(){
+Node.prototype.undrag = function(){
 	if(this._shape){
 		this._shape.undrag();
 	}
 }
 
-Widget.prototype.getType = function(){
+Node.prototype.getType = function(){
 	return this._type;
 }
 
-Widget.prototype.getID = function(){
+Node.prototype.getID = function(){
 	return this._shape ? this._shape.getID() : "";
 }
 
 
-Widget.prototype.findSnap = function(x, y){
+Node.prototype.findSnap = function(x, y){
 	return this._shape ? this._shape.findSnap(x, y) : null;
 }
 
-Widget.prototype.getSnapPos = function(){
+Node.prototype.getSnapPos = function(){
 	return this._shape ? this._shape.getSnapPos() : [];
 }
 
-Widget.prototype.startSnapping = function(){
+Node.prototype.startSnapping = function(){
 	if(this._shape){
 		this._shape.startSnapping();
 	}
 }
 
-Widget.prototype.stopSnapping = function(){
+Node.prototype.stopSnapping = function(){
 	if(this._shape){
 		this._shape.stopSnapping();
 	}

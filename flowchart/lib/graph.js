@@ -82,20 +82,20 @@ Graph.prototype.getEdges = function(){
 }
 
 Graph.prototype.createDatumNode = function(xmin, ymin, xmax, ymax){
-	var nodeManager = WidgetManager.getInstance();
+	var nodeManager = NodeManager.getInstance();
 	var datum = nodeManager.createDataNode(this._r, xmin, ymin, xmax, ymax)
 	return datum;
 }
 
 Graph.prototype.getData = function(){
-	// var datumManager = WidgetManager.getInstance();
+	// var datumManager = NodeManager.getInstance();
 	// return datumManager.getNodes();
-	var nodeManager = WidgetManager.getInstance();
+	var nodeManager = NodeManager.getInstance();
 	return nodeManager.getDataNodes();
 }
 
 Graph.prototype.createFuncNode = function(xmin, ymin, xmax, ymax){
-	var nodeManager = WidgetManager.getInstance();
+	var nodeManager = NodeManager.getInstance();
 	var func = nodeManager.createFuncNode(this._r, xmin, ymin, xmax, ymax)
 	return func;
 }
@@ -103,7 +103,7 @@ Graph.prototype.createFuncNode = function(xmin, ymin, xmax, ymax){
 Graph.prototype.getFunctions = function(){
 	// var funcManager = FuncManager.getInstance();
 	// return funcManager.getNodes();
-	var nodeManager = WidgetManager.getInstance();
+	var nodeManager = NodeManager.getInstance();
 	return nodeManager.getFuncNodes();
 }
 

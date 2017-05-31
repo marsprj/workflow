@@ -1,6 +1,6 @@
 var Ellipse = function(r, xmin, ymin, width, height){
 
-	Widget.apply(this, arguments);
+	Shape.apply(this, arguments);
 
 	this._r = r;
 	this._type = "data";

@@ -1,44 +1,44 @@
-var WidgetManager = function(){
+var NodeManager = function(){
 
 	this._instance = null;
-	this._widgets = [];
+	this._nodes = [];
 }
 
-WidgetManager.prototype.createDataNode = function(r, xmin, ymin, xmax, ymax){
+NodeManager.prototype.createDataNode = function(r, xmin, ymin, xmax, ymax){
 
-	var widget = new DataWidget(r, xmin, ymin, xmax, ymax);	
-	//widget.enableHover();
+	var node = new DataNode(r, xmin, ymin, xmax, ymax);	
+	//node.enableHover();
 
-	this._widgets.push(widget);
-	return widget;
+	this._nodes.push(node);
+	return node;
 }
 
-WidgetManager.prototype.createFuncNode = function(r, xmin, ymin, width, height, round){
+NodeManager.prototype.createFuncNode = function(r, xmin, ymin, width, height, round){
 
-	var widget = new FuncWidget(r, xmin, ymin, width, height, round);
-	//widget.enableHover();
+	var node = new FuncNode(r, xmin, ymin, width, height, round);
+	//node.enableHover();
 
-	this._widgets.push(widget);
-	return widget;
+	this._nodes.push(node);
+	return node;
 }
 
-WidgetManager.prototype.getWidgetById = function(id){
-	var len = this._widgets.length;
+NodeManager.prototype.getNodeById = function(id){
+	var len = this._nodes.length;
 	for(var i=0; i<len; i++){
-		var wid = this._widgets[i].getID();
+		var wid = this._nodes[i].getID();
 		console.log(wid);
 		
-		if(this._widgets[i].getID() == id){
-			return this._widgets[i];
+		if(this._nodes[i].getID() == id){
+			return this._nodes[i];
 		}
 	}
 
 	return null;
 }
 
-WidgetManager.prototype.getDataNodes = function(){
+NodeManager.prototype.getDataNodes = function(){
 	var nodes = [];
-	this._widgets.forEach(function(n){
+	this._nodes.forEach(function(n){
 		if(n.getType() == NODE_TYPE.DATA){
 			nodes.push(n);
 		}
@@ -48,9 +48,9 @@ WidgetManager.prototype.getDataNodes = function(){
 }
 
 
-WidgetManager.prototype.getFuncNodes = function(){
+NodeManager.prototype.getFuncNodes = function(){
 	var nodes = [];
-	this._widgets.forEach(function(n){
+	this._nodes.forEach(function(n){
 		if(n.getType() == NODE_TYPE.FUNC){
 			nodes.push(n);
 		}
@@ -59,20 +59,20 @@ WidgetManager.prototype.getFuncNodes = function(){
 	return nodes;
 }
 
-WidgetManager.prototype.getFuncNode = function(){
-	var count = this._widgets.length;
+NodeManager.prototype.getFuncNode = function(){
+	var count = this._nodes.length;
 	for(var i=0; i<count; i++){
-		if(this._widgets[i].getType() == NODE_TYPE.FUNC){
-			return this._widgets[i];
+		if(this._nodes[i].getType() == NODE_TYPE.FUNC){
+			return this._nodes[i];
 		}
 	}
 		
 	return null;
 }
 
-WidgetManager.getInstance = function(){
+NodeManager.getInstance = function(){
 	if(this._instance==null){
-		this._instance = new WidgetManager();
+		this._instance = new NodeManager();
 	}
 	return this._instance;
 }

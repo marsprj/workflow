@@ -1,6 +1,6 @@
-var FuncWidget = function(r, xmin, ymin, width, height){
+var FuncNode = function(r, xmin, ymin, width, height){
 
-	Widget.apply(this, arguments);
+	Node.apply(this, arguments);
 
 	this._r = r;
 	this._type = "function";
@@ -14,15 +14,15 @@ var FuncWidget = function(r, xmin, ymin, width, height){
 	this._shape.showText();
 }
 
-extend(FuncWidget, Widget);
+extend(FuncNode, Node);
 
-FuncWidget.prototype.addInputEdge = function(input){
+FuncNode.prototype.addInputEdge = function(input){
 	if(input){
 		this._inputs.push(input);
 	}
 }
 
-FuncWidget.prototype.getInputs = function(){
+FuncNode.prototype.getInputs = function(){
 	var inputs = [];
 	this._inputs.forEach(function(e){
 		var from = e.getFrom();
@@ -34,22 +34,22 @@ FuncWidget.prototype.getInputs = function(){
 	return inputs;
 }
 
-FuncWidget.prototype.getOutputEdge = function(i){
+FuncNode.prototype.getOutputEdge = function(i){
 	if( (i>0) || (i<this._inputs.length)){
 		return this._inputs[i];
 	}
 	return null;
 }
 
-FuncWidget.prototype.setOutputEdge = function(output){
+FuncNode.prototype.setOutputEdge = function(output){
 	this._output = output;
 }
 
-FuncWidget.prototype.getOutputEdge = function(){
+FuncNode.prototype.getOutputEdge = function(){
 	return this._output;
 }
 
-FuncWidget.prototype.getOutput = function(){
+FuncNode.prototype.getOutput = function(){
 	if(this._output){
 		return this._output.getTo();
 	}
@@ -57,7 +57,7 @@ FuncWidget.prototype.getOutput = function(){
 }
 
 
-FuncWidget.prototype.offset = function(dx, dy){
+FuncNode.prototype.offset = function(dx, dy){
 	if(this._shape){
 		this._shape.offset(dx, dy);
 	}

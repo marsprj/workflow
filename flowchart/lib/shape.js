@@ -13,12 +13,10 @@ var Shape = function(r){
 }
 
 Shape.prototype.hover_in = function(){
-	//console.log("widget hover in");
 	this.showSnap();
 }
 
 Shape.prototype.hover_out = function(){
-	//console.log("widget hover out");
 	this.hideSnap();
 }
 
@@ -165,9 +163,9 @@ Shape.prototype.enableHover = function(){
 	this._shape.hover(
 		function(evt){		//hover in
 			var container = $("#canvas");
-			var manager = WidgetManager.getInstance();
+			var manager = NodeManager.getInstance();
 			//var from = that;
-			var from = manager.getWidgetById(that.getID());
+			var from = manager.getNodeById(that.getID());
 
 			var onmousemove = function(evt){
 				//获取鼠标处的Element
@@ -175,11 +173,11 @@ Shape.prototype.enableHover = function(){
 				console.log(target);
 				if(target){
 					console.log("...............")
-					//获取Element所对应的Widget
-					var to = manager.getWidgetById(target.id);
+					//获取Element所对应的Node
+					var to = manager.getNodeById(target.id);
 					if(to){
 						if(from.getType() != to.getType()){
-							//相同类型的Widget不允许相连，例如两个Data连接起来没有意义
+							//相同类型的Node不允许相连，例如两个Data连接起来没有意义
 							//寻找snap
 							var pos = to.findSnap(evt.offsetX, evt.offsetY);
 							if(pos){
@@ -209,7 +207,7 @@ Shape.prototype.enableHover = function(){
 				var target = that._r.getElementByPoint(evt.pageX, evt.pageY);
 				if(target){
 					
-					var to = manager.getWidgetById(target.id);
+					var to = manager.getNodeById(target.id);
 					if(from.getType() != to.getType()){
 						var conManager = ConnectionManager.getInstance()
 						var id = conManager.makeID(from,to);
