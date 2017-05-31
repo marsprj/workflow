@@ -7,6 +7,9 @@ var Shape = function(r){
 	this._ymin = 0;
 	this._xmax = 0;
 	this._ymax = 0;
+
+	this._snap_hover_in = null;
+	this._snap_hover_out = null;
 }
 
 Shape.prototype.hover_in = function(){
@@ -121,7 +124,7 @@ Shape.prototype.findSnap = function(x, y){
 	};
 }
 
-Shape.prototype.initListener = function(){
+Shape.prototype.startSnapping = function(){
 	var that = this;
 	var onmousemove = function(evt){
 		var index = that.findSnap(evt.offsetX, evt.offsetY);
@@ -129,21 +132,33 @@ Shape.prototype.initListener = function(){
 			console.log("[snap]:" + index);
 		}
 	}
-	this._shape.hover(
-		function(evt){		//hover in
+	this._snap_hover_in = function(evt){		//hover in
 			that.showSnap();
 
 			var container = $("#canvas");
 			container.on("mousemove", onmousemove);
 
-		},
-		function(evt){		//hover out
-			that.hideSnap();
-			var container = $("#canvas");
-			container.unbind("mousemove", onmousemove);
-		}
+	};
+
+	this._snap_hover_out = function(evt){		//hover out
+		that.hideSnap();
+		var container = $("#canvas");
+		container.unbind("mousemove", onmousemove);
+	}
+
+	this._shape.hover(
+		this._snap_hover_in,
+		this._snap_hover_out
 	);
 }
+
+Shape.prototype.stopSnapping = function(){
+	this._shape.unhover(
+		this._snap_hover_in,
+		this._snap_hover_out
+	);
+}
+
 
 Shape.prototype.enableHover = function(){
 	var that = this;

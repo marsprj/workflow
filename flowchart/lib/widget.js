@@ -76,9 +76,14 @@ Widget.prototype.getSnapPos = function(){
 	return this._shape ? this._shape.getSnapPos() : [];
 }
 
-// Widget.prototype.showText = function(){
-// 	if(this._shape){
-// 		var text = this._shape.getID();
-		
-// 	}
-// }
+Widget.prototype.startSnapping = function(){
+	if(this._shape){
+		this._shape.startSnapping();
+	}
+}
+
+Widget.prototype.stopSnapping = function(){
+	if(this._shape){
+		this._shape.stopSnapping();
+	}
+}

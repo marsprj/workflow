@@ -82,19 +82,19 @@ Graph.prototype.getEdges = function(){
 }
 
 Graph.prototype.createDatumNode = function(xmin, ymin, xmax, ymax){
-	var datumManager = DatumManager.getInstance();
-	var datum = datumManager.createDatumNode(this._r, xmin, ymin, xmax, ymax)
+	var nodeManager = WidgetManager.getInstance();
+	var datum = nodeManager.createDataNode(this._r, xmin, ymin, xmax, ymax)
 	return datum;
 }
 
 Graph.prototype.getData = function(){
-	var datumManager = DatumManager.getInstance();
+	var datumManager = WidgetManager.getInstance();
 	return datumManager.getNodes();
 }
 
 Graph.prototype.createFuncNode = function(xmin, ymin, xmax, ymax){
-	var funcManager = FuncManager.getInstance();
-	var func = funcManager.createFuncNode(this._r, xmin, ymin, xmax, ymax)
+	var nodeManager = WidgetManager.getInstance();
+	var func = nodeManager.createFuncNode(this._r, xmin, ymin, xmax, ymax)
 	return func;
 }
 
