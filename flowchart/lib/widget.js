@@ -237,3 +237,27 @@ Widget.prototype.findSnap = function(x, y){
 		y : s.y
 	};
 }
+
+Widget.prototype.initListener = function(){
+	var that = this;
+	var onmousemove = function(evt){
+		var index = that.findSnap(evt.offsetX, evt.offsetY);
+		if(index){
+			console.log("[snap]:" + index);
+		}
+	}
+	this._widget.hover(
+		function(evt){		//hover in
+			that.showSnap();
+
+			var container = $("#canvas");
+			container.on("mousemove", onmousemove);
+
+		},
+		function(evt){		//hover out
+			that.hideSnap();
+			var container = $("#canvas");
+			container.unbind("mousemove", onmousemove);
+		}
+	);
+}

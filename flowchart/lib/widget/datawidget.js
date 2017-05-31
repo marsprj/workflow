@@ -26,27 +26,7 @@ var DataWidget = function(r, xmin, ymin, width, height){
 	);
 	this._id = this._widget.id;
 
-	var that = this;
-	var onmousemove = function(evt){
-		var index = that.findSnap(evt.offsetX, evt.offsetY);
-		if(index){
-			console.log("[snap]:" + index);
-		}
-	}
-	this._widget.hover(
-		function(evt){		//hover in
-			that.showSnap();
-
-			var container = $("#canvas");
-			container.on("mousemove", onmousemove);
-
-		},
-		function(evt){		//hover out
-			that.hideSnap();
-			var container = $("#canvas");
-			container.unbind("mousemove", onmousemove);
-		}
-	);
+	this.initListener();
 }
 
 extend(DataWidget, Widget);
