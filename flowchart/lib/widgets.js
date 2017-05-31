@@ -36,6 +36,39 @@ WidgetManager.prototype.getWidgetById = function(id){
 	return null;
 }
 
+WidgetManager.prototype.getDataNodes = function(){
+	var nodes = [];
+	this._widgets.forEach(function(n){
+		if(n.getType() == NODE_TYPE.DATA){
+			nodes.push(n);
+		}
+	})
+
+	return nodes;
+}
+
+
+WidgetManager.prototype.getFuncNodes = function(){
+	var nodes = [];
+	this._widgets.forEach(function(n){
+		if(n.getType() == NODE_TYPE.FUNC){
+			nodes.push(n);
+		}
+	})
+
+	return nodes;
+}
+
+WidgetManager.prototype.getFuncNode = function(){
+	var count = this._widgets.length;
+	for(var i=0; i<count; i++){
+		if(this._widgets[i].getType() == NODE_TYPE.FUNC){
+			return this._widgets[i];
+		}
+	}
+		
+	return null;
+}
 
 WidgetManager.getInstance = function(){
 	if(this._instance==null){

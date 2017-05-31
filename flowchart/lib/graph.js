@@ -88,8 +88,10 @@ Graph.prototype.createDatumNode = function(xmin, ymin, xmax, ymax){
 }
 
 Graph.prototype.getData = function(){
-	var datumManager = WidgetManager.getInstance();
-	return datumManager.getNodes();
+	// var datumManager = WidgetManager.getInstance();
+	// return datumManager.getNodes();
+	var nodeManager = WidgetManager.getInstance();
+	return nodeManager.getDataNodes();
 }
 
 Graph.prototype.createFuncNode = function(xmin, ymin, xmax, ymax){
@@ -99,8 +101,10 @@ Graph.prototype.createFuncNode = function(xmin, ymin, xmax, ymax){
 }
 
 Graph.prototype.getFunctions = function(){
-	var funcManager = FuncManager.getInstance();
-	return funcManager.getNodes();
+	// var funcManager = FuncManager.getInstance();
+	// return funcManager.getNodes();
+	var nodeManager = WidgetManager.getInstance();
+	return nodeManager.getFuncNodes();
 }
 
 Graph.prototype.createEdge = function(from, to){
