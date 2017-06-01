@@ -98,3 +98,23 @@ html, body{
 	line-height: 30px;
 	background-color: #eeeeee;
 }
+
+.func_container{
+	width: 100%;
+	height: calc(100%-30px);
+	background-color: red;
+}
+
+.func{
+	width: calc(100%-10px);
+	padding-left: 10px;
+	height: 30px;
+	line-height: 30px;
+	background-color: white;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.func:hover{
+	background-color: #dff1f9;
+	cursor : "pointer";
+}
