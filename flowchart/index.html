@@ -2,25 +2,46 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<style type="text/css">
-		#canvas{
-			width: 1000px;
-			height: 500px;
-			background-color: #eeeeee;
-		}
-	</style>
-	<title>flowchart</title>
+	<link rel="stylesheet" type="text/css" href="css/workflow.css">
+	<title>Workflow</title>
 </head>
-<body>
-	<input type="button" value="Input" onclick="onAddInput()">
-	<input type="button" value="Output" onclick="onAddOutput()">
-	<input type="button" value="Function" onclick="onAddFunction()">
+
+<body onload="init();">
+	
+<!-- 	<input type="button" value="生成执行序列" onclick="onSeralize()">
+	<input type="text" id="workflow" size="60">
 	<br>
 	<input type="button" value="Drag" onclick="onDrag()">
 	<input type="button" value="Connect" onclick="onConnect()">
 	<input type="button" value="Test" onclick="onTest()">
-	
-	<div id="canvas"></div>
+	<input type="text" id="xy" size="30">
+	<br>
+	<input type="text" id="xy" size="30"> -->
+	<div id="header">
+		<div class="title">工作流系统</div>
+		<div class="toolbar">
+			<ul>
+				<li id="add">添加</li>
+				<li id="sel">选择</li>
+				<li id="conn">连接</li>
+				<li id="save">保存</li>				
+				<li id="load">加载</li>
+				<li id="run">运行</li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="center">
+		<div id="funcs">
+			<div class="titlebar">算法库</div>
+		</div>
+		<div id="main">
+			<div id="canvas"></div>
+			<div id="result">
+				<div class="titlebar">输出</div>
+			</div>
+		</div>
+	</div>
 	<br>
 	
 	
@@ -29,15 +50,23 @@
 
 
 <script type="text/javascript" src="../lib/raphael.js"></script>
-<script type="text/javascript" src="../lib/raphael-draggable.js"></script>
 <script type="text/javascript" src="../lib/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="lib/arrow.js"></script>
-<script type="text/javascript" src="lib/connection.js"></script>
-<script type="text/javascript" src="lib/connections.js"></script>
-<script type="text/javascript" src="lib/widget.js"></script>
-<script type="text/javascript" src="lib/widget/datawidget.js"></script>
-<script type="text/javascript" src="lib/widget/funcwidget.js"></script>
-<script type="text/javascript" src="lib/widgets.js"></script>
+<script type="text/javascript" src="lib/def.js"></script>
+<script type="text/javascript" src="lib/Arrow.js"></script>
+<script type="text/javascript" src="lib/Edge.js"></script>
+<script type="text/javascript" src="lib/EdgeManager.js"></script>
+<script type="text/javascript" src="lib/Node.js"></script>
+<script type="text/javascript" src="lib/Shape.js"></script>
+<script type="text/javascript" src="lib/shape/Ellipse.js"></script>
+<script type="text/javascript" src="lib/shape/Rect.js"></script>
+
+<script type="text/javascript" src="lib/Node/DataNode.js"></script>
+<script type="text/javascript" src="lib/Node/FuncNode.js"></script>
+<script type="text/javascript" src="lib/NodeManager.js"></script>
+
+<script type="text/javascript" src="lib/Graph.js"></script>
+
+<script type="text/javascript" src="js/workflow.js"></script>
 
 <script type="text/javascript">
 	var input, output, func;
@@ -56,48 +85,78 @@
 	var g_connect_state = CONNECT_STATE.NONE;
 
 	//创建Raphael对象
-	var R = Raphael("canvas", 1000,600);
-	onAddInput();
-	onAddOutput();
-	onAddFunction();
+	//var R = Raphael("canvas", $("#canvas").width(), $("#canvas").height());
+	var graph = new Graph("canvas");
+	initGraph();
 
-	function onAddInput(){
-		//input = new Data(R, 100, 220, 200, 280);
-		//input = new Data(R, 100, 220, 200, 280);
-		var manager = WidgetManager.getInstance();
-		var input = manager.newDataWidget(R, 100, 220, 200, 280);
+	function initGraph(){
+		
+
+		var input_1_1 = graph.createDatumNode(50, 50, 100, 50);
+		var input_1_2 = graph.createDatumNode(50, 150, 100, 50);
+		var output_1  = graph.createDatumNode(350, 100, 100, 50);
+		var func_1    = graph.createFuncNode(200, 100, 100, 50);
+		var conn_1_1  = graph.createEdge(input_1_1, func_1);
+		var conn_1_2  = graph.createEdge(input_1_2, func_1);
+		var conn_1_3  = graph.createEdge(func_1, output_1);
+
+		var input_2_1 = graph.createDatumNode(50, 300, 100, 50);
+		var func_2    = graph.createFuncNode(200, 300, 100, 50);
+		var output_2  = graph.createDatumNode(350, 300, 100, 50);
+		var conn_2_1  = graph.createEdge(input_2_1, func_2);
+		var conn_2_2  = graph.createEdge(func_2, output_2);
+
+		var func_3    = graph.createFuncNode(600, 200, 100, 50);
+		var output_3  = graph.createDatumNode(800, 200, 100, 50);
+		var conn_3_1  = graph.createEdge(output_1, func_3);
+		var conn_3_2  = graph.createEdge(output_2, func_3);
+		var conn_3_3  = graph.createEdge(func_3, output_3);
 	}
 
-	function onAddOutput(){
-		//output = new Data(R, 650,220, 750, 280);
-		var manager = WidgetManager.getInstance();
-		var output = manager.newDataWidget(R, 650,220, 750, 280);
+	function onSeralize(){
+		graph.serialize();
+		document.getElementById("workflow").value = graph.getWorkflowText();
 	}
 
-	function onAddFunction(){
-		//func = new Func(R, 350, 225, 100, 60, 10);
-		var manager = WidgetManager.getInstance();
-		var func = manager.newFuncWidget(R, 350, 225, 100, 60, 10);
-	}
-
-	function onDrag(){
-		var target = R.getElementByPoint(150,250);
-		alert(target);
-		// input.draggable();
-		// output.draggable();
-		// func.draggable();
+	function onDrag(){		
+		graph.draggable();
 	}
 
 	function onConnect(){
-		input.undrag();
-		output.undrag();
-		func.undrag();
+		graph.undrag();
 	}
 
 	function onTest(){
-		var data = new Data(R);
-		data.getType();
-		data.echo();
+		//var dd = new L.Class1();
+		//dd.echo();
+		// var data = new Data(R);
+		// data.getType();
+		// data.echo();
+		
+		// var v=null;
+		// if(v){
+		// 	alert("1");
+		// }
+		// else{
+		// 	alert("2");
+		// }
+		// 
+		
+		var arr = [];
+		for(var i=0; i<10; i++){
+			arr.push(i);
+		}
+		while(arr.length>0){
+			console.log(arr.pop());
+		}
+	}
+
+	function init(){
+		$("#canvas").on("mousemove", onMouseMove);
+	}
+
+	function onMouseMove(evt){
+		//document.getElementById("xy").value = evt.offsetX + "," + evt.offsetY;
 	}
 
 </script>

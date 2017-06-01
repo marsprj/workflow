@@ -1,11 +1,9 @@
-var Graph = function(r, container_id){
+var Graph = function(container_id){
 
-	this._r = r;
 	this._container_id = container_id;
-
-	this._edges = [];	//连接Datum和Func的边
-	this._datum = [];	//数据节点
-	this._funcs = [];	//函数节点
+	this._width = $("#" + this._container_id).width();
+	this._height = $("#" + this._container_id).height();
+	this._r = Raphael(this._container_id, this._width, this._height);
 
 	this._workflow = [];
 

@@ -58,8 +58,7 @@
 	var g_connect_state = CONNECT_STATE.NONE;
 
 	//创建Raphael对象
-	var R = Raphael("canvas", 1000,600);
-	var graph = new Graph(R);
+	var graph = new Graph("canvas");
 	initGraph();
 
 	var input_2_1, func_2;
