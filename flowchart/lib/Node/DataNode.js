@@ -4,13 +4,14 @@ var DataNode = function(r, xmin, ymin, width, height){
 
 	this._r = r;
 	this._type = "data";
+	this._name = "data";
 
 	this._shape = new Ellipse(r, xmin, ymin, width, height);
 	this._id = this._shape.getID();
 
 	//this._shape.initListener();
 	//this._shape.enableHover();
-	this._shape.showText();
+	//this.showText();
 
 	this._from = null;
 	this._to   = null;

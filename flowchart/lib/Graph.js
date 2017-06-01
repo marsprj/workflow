@@ -4,6 +4,11 @@ var GRAPH_STATE = {
 	NONE : "none"
 }
 
+var FUNCTION_TYPE = {
+	Stretch : "Stretch",
+	Fusion  : "Fusion"
+}
+
 var Graph = function(container_id){
 
 	this._container_id = container_id;
@@ -70,6 +75,7 @@ Graph.prototype.export = function(){
 		var func = {
 			id : node.getID(),
 			type : node.getType(),
+			name : node.getName(),
 			inputs : [],
 			output : null
 		}
@@ -78,6 +84,7 @@ Graph.prototype.export = function(){
 			var inp = {
 				id : n.getID(),
 				type : n.getType(),
+				name : node.getName(),
 			}
 			func.inputs.push(inp);
 		})
@@ -86,6 +93,7 @@ Graph.prototype.export = function(){
 			var oup = {
 				id : output.getID(),
 				type : output.getType(),	
+				name : node.getName(),
 			}
 			func.output = oup;	
 		}
@@ -176,7 +184,7 @@ Graph.prototype.getData = function(){
 	return nodeManager.getDataNodes();
 }
 
-Graph.prototype.createFuncNode = function(centerx, centery, width, height){
+Graph.prototype.createFuncNode = function(type, centerx, centery, width, height){
 
 	var w = width  ?  width : 100;
 	var h = height ? height :  50;
@@ -184,7 +192,31 @@ Graph.prototype.createFuncNode = function(centerx, centery, width, height){
 	var ymin = centery - h / 2;
 
 	var nodeManager = NodeManager.getInstance();
-	var func = nodeManager.createFuncNode(this._r, xmin, ymin, w, h);
+	var func = nodeManager.createFuncNode(type, this._r, xmin, ymin, w, h);
+	return func;
+}
+
+// Graph.prototype.createFuncNode = function(type, centerx, centery, width, height){
+
+// 	var w = width  ?  width : 100;
+// 	var h = height ? height :  50;
+// 	var xmin = centerx - w / 2;
+// 	var ymin = centery - h / 2;
+
+// 	var nodeManager = NodeManager.getInstance();
+// 	var func = nodeManager.createFuncNode(type, this._r, xmin, ymin, w, h);
+// 	return func;
+// }
+
+Graph.prototype.createStretchNode = function(centerx, centery, width, height){
+
+	var w = width  ?  width : 100;
+	var h = height ? height :  50;
+	var xmin = centerx - w / 2;
+	var ymin = centery - h / 2;
+
+	var nodeManager = NodeManager.getInstance();
+	var func = nodeManager.createStretchNode(this._r, xmin, ymin, w, h);
 	return func;
 }
 

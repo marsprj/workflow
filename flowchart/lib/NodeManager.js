@@ -7,20 +7,40 @@ var NodeManager = function(){
 NodeManager.prototype.createDataNode = function(r, xmin, ymin, width, height){
 
 	var node = new DataNode(r, xmin, ymin, width, height);	
-	//node.enableHover();
+	node.showText();
 
 	this._nodes.push(node);
 	return node;
 }
 
-NodeManager.prototype.createFuncNode = function(r, xmin, ymin, width, height, round){
+NodeManager.prototype.createFuncNode = function(type, r, xmin, ymin, width, height, round){
 
-	var node = new FuncNode(r, xmin, ymin, width, height, round);
-	//node.enableHover();
+	var node = null;
+	switch(type){
+		case FUNCTION_TYPE.Stretch:{
+			node = new Stretch(r, xmin, ymin, width, height, round);
+		}
+		break;
+		case FUNCTION_TYPE.Fusion:{
+			node = new Fusion(r, xmin, ymin, width, height, round);
+		}
+		break;
+	}
+	node.showText();
 
 	this._nodes.push(node);
 	return node;
 }
+
+
+NodeManager.prototype.createStretchNode = function(r, xmin, ymin, width, height, round){
+
+	var node = new FStretch(r, xmin, ymin, width, height, round);
+	node.showText();
+	this._nodes.push(node);
+	return node;
+}
+
 
 NodeManager.prototype.getNodeById = function(id){
 	var len = this._nodes.length;

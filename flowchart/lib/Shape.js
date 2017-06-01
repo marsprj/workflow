@@ -216,8 +216,7 @@ Shape.prototype.hideSnap = function(){
 	this._snaps.length = 0;
 }
 
-Shape.prototype.showText = function(){
-	var text = this._shape.id;
+Shape.prototype.showText = function(text){	
 	var cx = (this._xmin + this._xmax) / 2;
 	var cy = (this._ymin + this._ymax) / 2;
 	this._text = this._r.text(cx, cy, text);

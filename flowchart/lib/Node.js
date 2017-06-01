@@ -23,7 +23,12 @@ var Node = function(r){
 
 	this._r = r;
 	this._type = WIDGET_TYPE.DATA;
+	this._name = "";
 	this._shape = null;
+}
+
+Node.prototype.getName = function(){
+	return this._name;
 }
 
 Node.prototype.draggable = function(){
@@ -51,6 +56,12 @@ Node.prototype.draggable = function(){
 			element.drag(move, start, end);
 		}
 	}
+}
+
+Node.prototype.showText = function(){
+	var id = this.getID();
+	var text = this._name + "\r\n" + id;
+	this._shape.showText(text);
 }
 
 Node.prototype.undrag = function(){

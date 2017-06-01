@@ -4,6 +4,7 @@ var FuncNode = function(r, xmin, ymin, width, height){
 
 	this._r = r;
 	this._type = "function";
+	this._name = "function";
 
 	this._inputs = [];
 	this._output = null;
@@ -11,7 +12,7 @@ var FuncNode = function(r, xmin, ymin, width, height){
 	this._shape = new Rect(r, xmin, ymin, width, height);
 	//this._shape.initListener();
 	//this._shape.enableHover();
-	this._shape.showText();
+	//this.showText();
 }
 
 extend(FuncNode, Node);
