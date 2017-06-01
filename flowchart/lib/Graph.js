@@ -59,6 +59,42 @@ Graph.prototype.serialize = function(){
 	this.populateParentFunc(tail, this._workflow);
 }
 
+Graph.prototype.export = function(){
+	
+	this.serialize();
+
+	var wf = [];
+
+	for(var i=this._workflow.length-1; i>=0; i--){
+		var node = this._workflow[i];		
+		var func = {
+			id : node.getID(),
+			type : node.getType(),
+			inputs : [],
+			output : null
+		}
+		var inputs = node.getInputs();
+		inputs.forEach(function(n){
+			var inp = {
+				id : n.getID(),
+				type : n.getType(),
+			}
+			func.inputs.push(inp);
+		})
+		var output = node.getOutput();
+		if(output){
+			var oup = {
+				id : output.getID(),
+				type : output.getType(),	
+			}
+			func.output = oup;	
+		}
+		wf.push(func);
+	}
+
+	return JSON.stringify(wf);
+}
+
 Graph.prototype.populateParentFunc = function(func, stack){
 	var that = this;
 	var inputs = func.getInputs();
