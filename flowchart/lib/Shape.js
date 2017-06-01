@@ -13,6 +13,7 @@ var Shape = function(r){
 
 	var that = this;
 	var connection = null;
+	//@deprecated
 	this._connection_listener = {
 		in : function(evt){		//hover in
 			var container = $("#canvas");
@@ -21,33 +22,50 @@ var Shape = function(r){
 			var from = manager.getNodeById(that.getID());
 
 			var onmousemove = function(evt){
+				console.log("[moving]:"+that._shape.id);
 				//获取鼠标处的Element
 				var target = that._r.getElementByPoint(evt.pageX, evt.pageY);
-				console.log(target);
+				console.log("1");
+				//(target);
 				if(target){
-					console.log("...............")
-					//获取Element所对应的Node
-					var to = manager.getNodeById(target.id);
-					if(to){
-						if(from.getType() != to.getType()){
-							//相同类型的Node不允许相连，例如两个Data连接起来没有意义
-							//寻找snap
-							var pos = to.findSnap(evt.offsetX, evt.offsetY);
-							if(pos){
-								//如果找到snap，则返回该snap的坐标，箭头自动连接到该snap
-								connection.update(start_x, start_y, pos.x, pos.y);	
+					console.log("2");
+					if(from.getID() == target.id){
+						console.log("3");
+						//起点和终点是一个Node
+						connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
+					}
+					else{
+						console.log("4");
+						//获取Element所对应的Node
+						var to = manager.getNodeById(target.id);
+						if(to){
+							console.log("5");
+							if(from.getType() != to.getType()){
+								//相同类型的Node不允许相连，例如两个Data连接起来没有意义
+								//寻找snap
+								console.log("6");
+								var pos = to.findSnap(evt.offsetX, evt.offsetY);
+								if(pos){
+									console.log("7");
+									//如果找到snap，则返回该snap的坐标，箭头自动连接到该snap
+									connection.update(start_x, start_y, pos.x, pos.y);	
+								}
+								else{
+									console.log("8");
+									//否则，则用鼠标点出的坐标更新箭头。
+									connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
+								}
 							}
 							else{
-								//否则，则用鼠标点出的坐标更新箭头。
-								connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
-							}
+								console.log("9");
+								connection.update(start_x, start_y, evt.offsetX, evt.offsetY);		
+							}	
 						}
-						else{
-							connection.update(start_x, start_y, evt.offsetX, evt.offsetY);		
-						}	
 					}
+					
 				}
 				else{
+					console.log("10");
 					connection.update(start_x, start_y, evt.offsetX, evt.offsetY);	
 				}				
 			}
@@ -64,6 +82,7 @@ var Shape = function(r){
 					if(from.getType() != to.getType()){
 						var conManager = ConnectionManager.getInstance()
 						var id = conManager.makeID(from,to);
+						console.log("[connection]:"+id);
 						var f  = conManager.getConnectionById(id);
 						if(f){
 							alert("连接已经存在，不能重复添加");
@@ -87,11 +106,15 @@ var Shape = function(r){
 					connection.remove();
 				}
 
-				console.log("mouse up");
+				console.log("[up]:"+that._shape.id);
+				container.unbind("mousedown",   onmousedown);
 				container.unbind("mousemove", onmousemove);
+				container.unbind("mouseup",   onmouseup);
 			}
 
 			var onmousedown = function(evt){
+
+				console.log("[down]:"+that._shape.id);
 
 				g_connect_state = CONNECT_STATE.CONNECTING;
 				// start_x = evt.offsetX;
@@ -103,7 +126,7 @@ var Shape = function(r){
 
 				//注册鼠标移动事件
 				container.on("mousemove", onmousemove);
-				console.log("mouse down");
+				container.on("mouseup", onmouseup);
 			}
 
 			switch(g_state)
@@ -114,8 +137,10 @@ var Shape = function(r){
 						console.log("[input]: connect ready");
 
 						//注册鼠标事件，之调用一次。
-						container.one("mousedown", onmousedown);
-						container.one("mouseup", onmouseup);
+						// container.one("mousedown", onmousedown);
+						// container.one("mouseup", onmouseup);
+						container.on("mousedown", onmousedown);
+						//container.on("mouseup", onmouseup);
 					}
 				}
 				break;
@@ -239,24 +264,24 @@ Shape.prototype.findSnap = function(x, y){
 
 Shape.prototype.startSnapping = function(){
 	var that = this;
-	var onmousemove = function(evt){
-		var index = that.findSnap(evt.offsetX, evt.offsetY);
-		if(index){
-			console.log("[snap]:" + index);
-		}
-	}
+	// var onmousemove = function(evt){
+	// 	var index = that.findSnap(evt.offsetX, evt.offsetY);
+	// 	if(index){
+	// 		console.log("[snap]:" + index);
+	// 	}
+	// }
 	this._snap_hover_in = function(evt){		//hover in
 			that.showSnap();
 
-			var container = $("#canvas");
-			container.on("mousemove", onmousemove);
+			// var container = $("#canvas");
+			// container.on("mousemove", onmousemove);
 
 	};
 
 	this._snap_hover_out = function(evt){		//hover out
 		that.hideSnap();
-		var container = $("#canvas");
-		container.unbind("mousemove", onmousemove);
+		// var container = $("#canvas");
+		// container.unbind("mousemove", onmousemove);
 	}
 
 	this._shape.hover(
@@ -272,12 +297,23 @@ Shape.prototype.stopSnapping = function(){
 	);
 }
 
-Shape.prototype.startConnecting = function(){
+Shape.prototype.startConnecting = function(onSelectChanged){
 	var that = this;
 	this._shape.hover(
-		that._connection_listener.in,
-		that._connection_listener.out
-	);
+		function(){
+			if(onSelectChanged){
+				onSelectChanged(that);
+			}
+		},
+		function(){
+			if(onSelectChanged){
+				onSelectChanged(null);
+			}
+		});
+	// this._shape.hover(
+	// 	that._connection_listener.in,
+	// 	that._connection_listener.out
+	// );
 }
 
 

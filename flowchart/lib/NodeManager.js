@@ -26,7 +26,6 @@ NodeManager.prototype.getNodeById = function(id){
 	var len = this._nodes.length;
 	for(var i=0; i<len; i++){
 		var wid = this._nodes[i].getID();
-		console.log(wid);
 		
 		if(this._nodes[i].getID() == id){
 			return this._nodes[i];

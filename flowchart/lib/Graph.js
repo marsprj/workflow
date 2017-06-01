@@ -1,11 +1,37 @@
-var Graph = function(r){
+var Graph = function(r, container_id){
 
 	this._r = r;
+	this._container_id = container_id;
+
 	this._edges = [];	//连接Datum和Func的边
 	this._datum = [];	//数据节点
 	this._funcs = [];	//函数节点
 
 	this._workflow = [];
+
+	this._selected_node = null;
+	this._start_node = null;
+	this._end_node = null;
+	this._connection = null;
+	this._conn_start = {
+		x : 0,
+		y : 0
+	};
+	this._conn_end = {
+		x : 0,
+		y : 0
+	};
+
+	this._onmousedown = null;
+	this._onmousemove = null;
+	this._onmouseup   = null;
+
+	var that = this;
+	this._onNodeSelectChanged = function(node){
+		that._selected_node = node;
+		
+		console.log("[nde]:" + (node ? node.getID() : "nothing"));
+	};
 }
 
 /*
@@ -135,7 +161,7 @@ Graph.prototype.createEdge = function(from, to){
 	return edge;
 }
 
-Graph.prototype.startConnecting = function(){
+Graph.prototype.startSnapping = function(){
 	var nodeManger = NodeManager.getInstance();
 	var nodes = nodeManger.getNodes();
 	nodes.forEach(function(n){
@@ -144,13 +170,192 @@ Graph.prototype.startConnecting = function(){
 	})
 }
 
+Graph.prototype.stopSnapping = function(){
+	var nodeManger = NodeManager.getInstance();
+	var nodes = nodeManger.getNodes();
+	nodes.forEach(function(n){
+		n.stopSnapping();
+		n.stopConnecting();
+	})	
+}
+
+// Graph.prototype.startConnecting = function(){
+
+// 	var that = this;
+// 	var nodeManger = NodeManager.getInstance();
+// 	var nodes = nodeManger.getNodes();
+// 	nodes.forEach(function(n){
+// 		n.startSnapping();
+// 		n.startConnecting(that._onNodeSelectChanged);
+// 	})
+// }
+
+// Graph.prototype.stopConnecting = function(){
+// 	var nodeManger = NodeManager.getInstance();
+// 	var nodes = nodeManger.getNodes();
+// 	nodes.forEach(function(n){
+// 		n.stopConnecting();
+// 		n.stopSnapping();
+// 	})	
+// }
+
+Graph.prototype.startConnecting = function(){
+	this.startSnapping();
+	// start node connecting
+	var that = this;
+	var nodeManger = NodeManager.getInstance();
+	var nodes = nodeManger.getNodes();
+	nodes.forEach(function(n){
+		n.startSnapping();
+		n.startConnecting(that._onNodeSelectChanged);
+	})
+
+	this._onmousedown = function(evt){
+		console.log("[graph]:down");
+		if(!that._start_node){
+			var node = that.getSelectedNode();
+			if(node){
+				that._start_node = node;			
+				that._conn_start = node.findSnap(evt.offsetX, evt.offsetY);
+				that._conn_end   = that._conn_start;
+				that._connection = new Connection(that._r, that._conn_start.x, that._conn_start.y
+														 , that._conn_end.x,   that._conn_end.y);
+			}
+		}
+			
+	};
+
+	this._onmousemove = function(evt){
+		console.log("[graph]:move");
+
+		if(that._start_node){
+			var node = that.getSelectedNode();
+			if(node){
+				//捕捉到终点
+				if(node.getID() == that._start_node.getID()){
+					that._connection.update(that._conn_start.x, that._conn_start.y, 
+											evt.offsetX, 		evt.offsetY);
+				}
+				else{
+					that._conn_end = node.findSnap(evt.offsetX, evt.offsetY);
+					that._end_node = node;
+					that._connection.update(that._conn_start.x, that._conn_start.y,
+										    that._conn_end.x,   that._conn_end.y);
+				}
+			}
+			else{
+				//未捕捉到终点
+				if(that._connection){
+					that._connection.update(that._conn_start.x, that._conn_start.y, 
+											evt.offsetX, 		evt.offsetY);	
+				}
+			}
+		}
+	};
+
+	this._onmouseup = function(evt){
+		if(that._start_node){
+			var node = that.getSelectedNode();
+			if(node){
+				if(node.getID() == that._start_node.getID()){
+					that._connection.remove();
+					that._connection = null;
+				}
+				else if(node.getType() == that._start_node.getType()){
+					that._connection.update(that._conn_start.x, that._conn_start.y, 
+											evt.offsetX, 		evt.offsetY);
+
+				}
+				else{
+					that._connection.remove();
+					that._end_node = node;				
+					
+					var conManager = ConnectionManager.getInstance();
+					var id = conManager.makeID(that._start_node, that._end_node);
+					var c = conManager.getConnectionById(id);
+					if(c){
+						alert("连接已经存在，不能重复添加");
+					}
+					else{
+						that._conn_end = node.findSnap(evt.offsetX, evt.offsetY);
+						that._connection = new Connection(that._r, that._conn_start.x, that._conn_start.y
+														 	 	 , that._conn_end.x,   that._conn_end.y);
+						that._connection.setEnds(that._start_node, that._end_node);
+						conManager.add(that._connection);
+					}
+				}
+			}else{
+				that._connection.remove();
+				that._connection = null;
+			}
+		}
+		that._connection = null;
+		that._start_node = null;
+		that._end_node   = null;
+	};
+
+	// add event listener
+	$("#"+this._container_id).on("mousedown", this._onmousedown);
+	$("#"+this._container_id).on("mousemove", this._onmousemove);
+	$("#"+this._container_id).on("mouseup",   this._onmouseup);
+}
+
 Graph.prototype.stopConnecting = function(){
+	this.stopSnapping();
+	// stop node connecting
 	var nodeManger = NodeManager.getInstance();
 	var nodes = nodeManger.getNodes();
 	nodes.forEach(function(n){
 		n.stopConnecting();
 		n.stopSnapping();
-	})	
+	})
+
+	//unbind listener
+	$("#"+this._container_id).unbind("mousedown", this.onMouseDown);
+	$("#"+this._container_id).unbind("mousemove", this.onMouseMove);
+	$("#"+this._container_id).unbind("mouseup",   this.onMouseUp);	
+}
+
+Graph.prototype.onMouseDown = function(evt){
+	console.log("[graph]:down");
+
+	var node = this.getSelectedNode();
+	if(node){
+		this._start_node = node;
+		this._conn_start = node.findSnap(evt.offsetX, evt.offsetY);
+		this._connection = new Connection(this._r, this._conn_start.x, this._conn_start.y
+												 , this._conn_end.x,   this._conn_end.y);
+	}
+}
+
+Graph.prototype.onMouseMove = function(evt){
+	console.log("[graph]:move");
+
+	var node = this.getSelectedNode();
+	if(node){
+		//捕捉到终点
+	}
+	else{
+		//未捕捉到终点
+		if(this._connection){
+			this._connection.update(this._conn_start.x, this._conn_start.y, 
+									evt.offsetX, evt.offsetY);	
+		}
+	}
+}
+
+Graph.prototype.onMouseUp = function(evt){
+	console.log("[graph]:up");
+}
+
+// Graph.prototype.onNodeSelectChanged = function(node){
+// 	this._selected_node = node;
+	
+// 	console.log("[nde]:" + (node ? node.getID() : "nothing"));
+// }
+
+Graph.prototype.getSelectedNode = function(){
+	return this._selected_node;
 }
 
 Graph.prototype.findLastFunction = function(){
@@ -182,3 +387,4 @@ Graph.prototype.findLastFunction = function(){
 
 	return last;
 }
+

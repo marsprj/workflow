@@ -88,9 +88,15 @@ Node.prototype.stopSnapping = function(){
 	}
 }
 
-Node.prototype.startConnecting = function(){
+Node.prototype.startConnecting = function(onSelectChanged){
+	var that = this;
+	var oncallback = function(obj){
+		if(onSelectChanged){
+			onSelectChanged( obj ? that : null);
+		}
+	}
 	if(this._shape){
-		this._shape.startConnecting();
+		this._shape.startConnecting(oncallback);
 	}
 }
 
