@@ -70,6 +70,10 @@ NodeManager.prototype.getFuncNode = function(){
 	return null;
 }
 
+NodeManager.prototype.getNodes = function(){
+	return this._nodes;
+}
+
 NodeManager.getInstance = function(){
 	if(this._instance==null){
 		this._instance = new NodeManager();

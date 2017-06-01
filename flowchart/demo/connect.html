@@ -19,6 +19,9 @@
 
 	<input type="button" value="Start Snapping" onclick="onStartSnapping()">
 	<input type="button" value="Stop Snapping" onclick="onStopSnapping()">
+
+	<input type="button" value="Start Connecting" onclick="onStartConnecting()">
+	<input type="button" value="Stop Connecting" onclick="onStopConnecting()">
 	<div id="canvas"></div>
 	<br>
 	
@@ -69,10 +72,10 @@
 
 	function initGraph(){
 		
-		input_2_1 = graph.createDatumNode(50, 300, 100, 50);
+		input_2_1 = graph.createDatumNode(50, 150, 100, 50);
 		
-		func_2    = graph.createFuncNode(350, 200, 100, 50);
-		var output_2  = graph.createDatumNode(650, 300, 100, 50);
+		func_2    = graph.createFuncNode(350, 50, 100, 50);
+		var output_2  = graph.createDatumNode(650, 150, 100, 50);
 	}
 
 	function onDrag(){		
@@ -89,6 +92,15 @@
 
 	function onStopSnapping(){
 		input_2_1.stopSnapping();	
+	}
+
+	function onStartConnecting(){
+		graph.undrag();
+		graph.startConnecting();
+	}
+
+	function onStopConnecting(){
+		graph.stopConnecting();	
 	}
 
 </script>

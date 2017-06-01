@@ -135,6 +135,24 @@ Graph.prototype.createEdge = function(from, to){
 	return edge;
 }
 
+Graph.prototype.startConnecting = function(){
+	var nodeManger = NodeManager.getInstance();
+	var nodes = nodeManger.getNodes();
+	nodes.forEach(function(n){
+		n.startSnapping();
+		n.startConnecting();
+	})
+}
+
+Graph.prototype.stopConnecting = function(){
+	var nodeManger = NodeManager.getInstance();
+	var nodes = nodeManger.getNodes();
+	nodes.forEach(function(n){
+		n.stopConnecting();
+		n.stopSnapping();
+	})	
+}
+
 Graph.prototype.findLastFunction = function(){
 	var last = null;
 	var funcs = this.getFunctions();

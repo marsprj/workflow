@@ -87,3 +87,15 @@ Node.prototype.stopSnapping = function(){
 		this._shape.stopSnapping();
 	}
 }
+
+Node.prototype.startConnecting = function(){
+	if(this._shape){
+		this._shape.startConnecting();
+	}
+}
+
+Node.prototype.stopConnecting = function(){
+	if(this._shape){
+		this._shape.stopConnecting();
+	}
+}
