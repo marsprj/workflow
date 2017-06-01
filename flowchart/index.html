@@ -21,6 +21,8 @@
 		<div class="title">工作流系统</div>
 		<div class="toolbar">
 			<ul>
+				<li id="adddata">添加(数据)</li>
+				<li id="addfunc">添加(算法)</li>
 				<li id="add">添加</li>
 				<li id="sel">选择</li>
 				<li id="conn">连接</li>
@@ -37,8 +39,9 @@
 		</div>
 		<div id="main">
 			<div id="canvas"></div>
-			<div id="result">
+			<div id="result_panel">
 				<div class="titlebar">输出</div>
+				<div id="result">输出结果</div>
 			</div>
 		</div>
 	</div>
@@ -86,44 +89,22 @@
 
 	//创建Raphael对象
 	//var R = Raphael("canvas", $("#canvas").width(), $("#canvas").height());
-	var graph = new Graph("canvas");
-	initGraph();
+	var g_graph = new Graph("canvas");
+	//initGraph();
 
-	function initGraph(){
-		
-
-		var input_1_1 = graph.createDatumNode(50, 50, 100, 50);
-		var input_1_2 = graph.createDatumNode(50, 150, 100, 50);
-		var output_1  = graph.createDatumNode(350, 100, 100, 50);
-		var func_1    = graph.createFuncNode(200, 100, 100, 50);
-		var conn_1_1  = graph.createEdge(input_1_1, func_1);
-		var conn_1_2  = graph.createEdge(input_1_2, func_1);
-		var conn_1_3  = graph.createEdge(func_1, output_1);
-
-		var input_2_1 = graph.createDatumNode(50, 300, 100, 50);
-		var func_2    = graph.createFuncNode(200, 300, 100, 50);
-		var output_2  = graph.createDatumNode(350, 300, 100, 50);
-		var conn_2_1  = graph.createEdge(input_2_1, func_2);
-		var conn_2_2  = graph.createEdge(func_2, output_2);
-
-		var func_3    = graph.createFuncNode(600, 200, 100, 50);
-		var output_3  = graph.createDatumNode(800, 200, 100, 50);
-		var conn_3_1  = graph.createEdge(output_1, func_3);
-		var conn_3_2  = graph.createEdge(output_2, func_3);
-		var conn_3_3  = graph.createEdge(func_3, output_3);
-	}
+	
 
 	function onSeralize(){
-		graph.serialize();
-		document.getElementById("workflow").value = graph.getWorkflowText();
+		g_graph.serialize();
+		document.getElementById("workflow").value = g_graph.getWorkflowText();
 	}
 
 	function onDrag(){		
-		graph.draggable();
+		g_graph.draggable();
 	}
 
 	function onConnect(){
-		graph.undrag();
+		g_graph.undrag();
 	}
 
 	function onTest(){

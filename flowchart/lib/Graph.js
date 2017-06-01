@@ -1,9 +1,17 @@
+var GRAPH_STATE = {
+	ADDDATA : "addData",
+	ADDFUNC : "addfunc",
+	NONE : "none"
+}
+
 var Graph = function(container_id){
 
 	this._container_id = container_id;
 	this._width = $("#" + this._container_id).width();
 	this._height = $("#" + this._container_id).height();
 	this._r = Raphael(this._container_id, this._width, this._height);
+
+	this._state = GRAPH_STATE.NONE;
 
 	this._workflow = [];
 
@@ -30,6 +38,14 @@ var Graph = function(container_id){
 		
 		console.log("[nde]:" + (node ? node.getID() : "nothing"));
 	};
+}
+
+Graph.prototype.getState = function(){
+	return this._state;
+}
+
+Graph.prototype.setState = function(state){
+	this._state = state;
 }
 
 /*
@@ -105,9 +121,15 @@ Graph.prototype.getEdges = function(){
 	return edgeManager.getConnections();
 }
 
-Graph.prototype.createDatumNode = function(xmin, ymin, xmax, ymax){
+Graph.prototype.createDatumNode = function(centerx, centery, width, height){
+
+	var w = width  ?  width : 100;
+	var h = height ? height :  50;
+	var xmin = centerx - w / 2;
+	var ymin = centery - h / 2;
+
 	var nodeManager = NodeManager.getInstance();
-	var datum = nodeManager.createDataNode(this._r, xmin, ymin, xmax, ymax)
+	var datum = nodeManager.createDataNode(this._r, xmin, ymin, w, h);
 	return datum;
 }
 
@@ -118,9 +140,15 @@ Graph.prototype.getData = function(){
 	return nodeManager.getDataNodes();
 }
 
-Graph.prototype.createFuncNode = function(xmin, ymin, xmax, ymax){
+Graph.prototype.createFuncNode = function(centerx, centery, width, height){
+
+	var w = width  ?  width : 100;
+	var h = height ? height :  50;
+	var xmin = centerx - w / 2;
+	var ymin = centery - h / 2;
+
 	var nodeManager = NodeManager.getInstance();
-	var func = nodeManager.createFuncNode(this._r, xmin, ymin, xmax, ymax)
+	var func = nodeManager.createFuncNode(this._r, xmin, ymin, w, h);
 	return func;
 }
 

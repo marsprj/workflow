@@ -4,9 +4,9 @@ var NodeManager = function(){
 	this._nodes = [];
 }
 
-NodeManager.prototype.createDataNode = function(r, xmin, ymin, xmax, ymax){
+NodeManager.prototype.createDataNode = function(r, xmin, ymin, width, height){
 
-	var node = new DataNode(r, xmin, ymin, xmax, ymax);	
+	var node = new DataNode(r, xmin, ymin, width, height);	
 	//node.enableHover();
 
 	this._nodes.push(node);
