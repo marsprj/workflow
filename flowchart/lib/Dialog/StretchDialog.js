@@ -62,7 +62,7 @@ StretchDialog.prototype.getInput = function(){
 
 
 StretchDialog.prototype.create = function(){
-	var html =   "<div id='func_dialog' class='func_dialog'>"
+	var html =   "<div class='func_dialog'>"
 			+"<div class='titlebar'>"
 			+"	<div class='dialog_title'>拉伸</div>"
 			+"	<div class='dialog_exit'></div>"
@@ -88,17 +88,18 @@ StretchDialog.prototype.create = function(){
 			+"			<div class='dialog_folder'></div>"
 			+"		</div>"
 			+"	</div>"
-			+"	<div class='dialog_bottom'>"
-			+"		<ul>"
-			+"			<li>"
-			+"				<a href='javascript:void(0)' id='dlg_btn_ok'>确定</a>"
-			+"			</li>"
-			+"			<li>"
-			+"				<a href='javascript:void(0)' id='dlg_btn_exit'>取消</a>"
-			+"			</li>"
-			+"		</ul>"
-			+"	</div>"
+			+"</div>"
+			+"<div class='dialog_bottom'>"
+			+"	<ul>"
+			+"		<li>"
+			+"			<a href='javascript:void(0)' id='dlg_btn_ok'>确定</a>"
+			+"		</li>"
+			+"		<li>"
+			+"			<a href='javascript:void(0)' id='dlg_btn_exit'>取消</a>"
+			+"		</li>"
+			+"	</ul>"
 			+"</div>";
+			
 	var dlg = $(html);
 	$('body').append(dlg);
 	return dlg;

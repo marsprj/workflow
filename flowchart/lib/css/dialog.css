@@ -110,3 +110,18 @@
 	background-color: #e0ecf6;
 	border: 1px solid #aaaaaa;
 }
+
+.dialog_file_path_wrapper{
+    margin: 10px 0px;
+    padding: 0px 10px;
+}
+
+.dialog_file_path{
+    width: 345px	;
+}
+
+.dialog_file_ctrl{
+	height: 200px;
+    margin: 0px 10px;
+    border: 1px solid #aaaaaa;
+}

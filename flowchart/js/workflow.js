@@ -52,8 +52,8 @@ $().ready(function(){
 
 	initGraph();
 
-	g_dlg = new StretchDialog();
-	g_dlg.show();
+	// g_dlg = new StretchDialog();
+	// g_dlg.show();
 })
 
 function initGraph(){
