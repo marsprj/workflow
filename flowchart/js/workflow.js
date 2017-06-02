@@ -1,5 +1,14 @@
 var g_func_type = null;
 
+var g_functions = [{
+		name : "Stretch",
+		description : "拉伸"
+	},{
+		name : "Fusion",
+		description : "融合"
+	}
+]
+
 $().ready(function(){
 
 	loadFunctions();
@@ -58,9 +67,18 @@ function initCanvasEvent(){
 }
 
 function initMenuEvents(){
-	$("#add").click(function(){
-		alert("add");
+	// $("#add").click(function(){
+	// 	alert("add");
+	// })
+
+	$("#add").mouseover(function(){
+		console.log("mouse over");
 	})
+
+	$("#add").mouseout(function(){
+		console.log("mouse out");
+	})
+
 	$("#sel").click(function(){
 		g_graph.stopConnecting();
 		g_graph.draggable();
@@ -93,14 +111,22 @@ function initMenuEvents(){
 
 function initNodeEvents(){
 	$(".func").click(function(){
-		g_func_type = $(this).text();
+		g_func_type = $(this).attr("id");
+		console.log(g_func_type);
+
+		$(".func_wrapper").css("background-color", "#ffffff");
+		$(this).parent().css("background-color", "#dff1f9");
 	})
 }
 
 function loadFunctions(){
 	var html = "";
-	html += "<div class='func'>" + FUNCTION_TYPE.Stretch + "</div>";
-	html += "<div class='func'>" + FUNCTION_TYPE.Fusion + "</div>";
-
+	g_functions.forEach(function(f){
+		//html += "<div class='func' id='" + f.name + "'>" + f.description + "</div>";	
+		html += "<div class='func_wrapper'>";
+		html += "	<div class='func_icon'></div>";
+		html += "	<div class='func' id='" + f.name + "'>" + f.description + "</div>";
+		html += "</div>";
+	})
 	document.getElementById("func_container").innerHTML = html;
 }

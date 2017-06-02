@@ -64,7 +64,8 @@ html, body{
 .toolbar{
 	float: right;
 	height: 25px;
-	width: 480px;
+	width: 320px;
+	margin-right: 10px;
 	/*background-color: red;*/
 	margin-top:25px;
 }
@@ -76,7 +77,7 @@ html, body{
 }
 
 .toolbar li{
-	width: 60px;
+	width: 40px;
 	height: 25px;
 	float: left;
 	color: white;
@@ -88,7 +89,23 @@ html, body{
 
 .toolbar li:hover{
 	background-color: #00b9ee;
-	cursor: "hand";
+	cursor: pointer;
+}
+
+.toolbar li ul{
+	display: none;
+}
+
+.toolbar li:hover ul{
+	display: list-item;
+}
+
+.toolbar li:hover ul li{
+	cursor: pointer;
+}
+
+.toolbar li ul li{
+	background-color: #0097c3;
 }
 
 .titlebar{
@@ -105,17 +122,32 @@ html, body{
 	background-color: red;
 }
 
+.func_wrapper{
+	width: 100%;
+	height: 30px;
+	background-color: white;
+	border-bottom: 1px solid #eeeeee;
+}
+
+.func_wrapper:hover{
+	background-color: #dff1f9阿;
+	cursor : "pointer";
+}
+
+.func_icon{
+	float: left;
+	width: 24px;
+	height: 100%;
+	padding-left: 20px;
+	background-image: url(../images/gear_24_24.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .func{
 	width: calc(100%-10px);
 	padding-left: 10px;
 	height: 30px;
 	line-height: 30px;
 	font-size: 12px;
-	background-color: white;
-	border-bottom: 1px solid #eeeeee;
-}
-
-.func:hover{
-	background-color: #dff1f9;
-	cursor : "pointer";
 }
