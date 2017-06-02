@@ -151,3 +151,7 @@ html, body{
 	line-height: 30px;
 	font-size: 12px;
 }
+
+.float_left{
+	float: left;
+}

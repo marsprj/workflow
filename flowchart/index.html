@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/workflow.css">
+	<link rel="stylesheet" type="text/css" href="css/dialog.css">
 	<title>Workflow</title>
 </head>
 
@@ -45,7 +46,89 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="func_dialog" class="func_dialog">
+		<div class='titlebar'>
+			<div class="dialog_title">拉伸</div>
+			<div class="dialog_exit"></div>
+		</div>
+		<div class="dialog_main">
+			<div class="dialog_item">
+				<div>
+					<div class="dialog_item_icon"></div>
+					<div class="dialog_item_title">输入影像:</div>
+				</div>
+				<div>
+					<div style="float:left;"><input type="text" class="dialog_input"></div>
+					<div class="dialog_folder"></div>
+				</div>
+			</div>
+			<div  class="dialog_item">
+				<div>
+					<div class="dialog_item_icon"></div>
+					<div class="dialog_item_title">输出影像:</div>
+				</div>
+				<div>
+					<div style="float:left;"><input type="text" class="dialog_input"></div>
+					<div class="dialog_folder"></div>
+				</div>
+			</div>
+			<div class="dialog_bottom">
+				<!-- <div style="float:right;width:200px;height:100%;margin:0px 10px;"> -->
+					<ul>
+						<li>
+							<a href="javascript:void(0)">确定</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)">取消</a>
+						</li>
+					</ul>
+				<!-- </div> -->
+			</div>
 	
+<!--
+ 	<div id="func_dialog" style="position: absolute;left: 400px;top: 200px;width: 400px;border : 1px solid #888888;background-color: white;box-shadow: 2px 2px 5px 2px #888888;">
+		<div class='titlebar'>
+			<div style="float:left;font-size:12px">拉伸</div>
+			<div style="float:right;width:16px;height:100%;margin-right:10px;background-image: url('images/exit_12.png');background-repeat: no-repeat;background-position: center;"></div>
+		</div>
+		<div id="d_main">
+			<div style="padding:10px;height:30px;font-size:12px">
+				<div>
+					<div style="float:left;width:18px;height:18px;background-image: url(images/ball_16.png);background-repeat: no-repeat;background-position: center;"></div>
+					<div style="float:left;">输入影像:</div>
+				</div>
+				<div style="margin-top:5px;">
+					<div style="float:left;"><input type="text" style="width:320px;margin-left:20px"></div>
+					<div style="float:right;width:30px;height:20px;background-image: url(images/folder_open_16.png);background-repeat: no-repeat;background-position: center;"></div>
+				</div>
+			</div>
+			<div style="padding:10px;height:30px;font-size:12px">
+				<div>
+					<div style="float:left;width:18px;height:18px;background-image: url(images/ball_16.png);background-repeat: no-repeat;background-position: center;"></div>
+					<div style="float:left;">输出影像:</div>
+				</div>
+				<div style="margin-top:5px;">
+					<div style="float:left;"><input type="text" style="width:320px;margin-left:20px"></div>
+					<div style="float:right;width:30px;height:20px;background-image: url(images/folder_open_16.png);background-repeat: no-repeat;background-position: center;"></div>
+				</div>
+			</div>
+			<div style="width:100%;height:24px;padding:3px 0px;margin:20px 0px;">
+				<div style="float:right;width:200px;height:100%;margin:0px 10px;">
+					<ul style="float:right;list-style:none;height:24px;margin:0px;padding:0px">
+						<li style="float:left;width:70px;height:24px;line-height: 24px;margin-left:10px">
+							<a href="javascript:void(0)" style="text-decoration:none;display: block;width: 70px;color: black;text-align:center;background-color: #f0f0f0">确定</a>
+						</li>
+						<li style="float:left;width:70px;height:24px;line-height: 24px;margin-left:10px">
+							<a href="javascript:void(0)" style="text-decoration: none;display: block;width: 70px;color: black;text-align:center;background-color: #f0f0f0">取消</a>
+						</li>
+					</ul>
+				</div>
+			</div> 
+-->
+
+		</div>
+	</div>
 </body>
 </html>
 
