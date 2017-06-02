@@ -17,6 +17,7 @@ var Graph = function(container_id){
 	this._r = Raphael(this._container_id, this._width, this._height);
 
 	this._state = GRAPH_STATE.NONE;
+	this._dragging = false;
 
 	this._workflow = [];
 
@@ -127,6 +128,9 @@ Graph.prototype.getWorkflowText = function(){
 }
 
 Graph.prototype.draggable = function(){
+
+	this._dragging = true;
+
 	// var edges = this.getEdges();
 	// edges.forEach(function(e){
 	// 	e.draggable();
@@ -144,6 +148,8 @@ Graph.prototype.draggable = function(){
 }
 
 Graph.prototype.undrag = function(){
+	this._dragging = false;
+
 	// var edges = this.getEdges();
 	// edges.forEach(function(e){
 	// 	e.undrag();
@@ -174,6 +180,11 @@ Graph.prototype.createDatumNode = function(centerx, centery, width, height){
 
 	var nodeManager = NodeManager.getInstance();
 	var datum = nodeManager.createDataNode(this._r, xmin, ymin, w, h);
+
+	if(this._dragging){
+		datum.draggable();
+	}
+
 	return datum;
 }
 
@@ -193,6 +204,10 @@ Graph.prototype.createFuncNode = function(type, centerx, centery, width, height)
 
 	var nodeManager = NodeManager.getInstance();
 	var func = nodeManager.createFuncNode(type, this._r, xmin, ymin, w, h);
+
+	if(this._dragging){
+		func.draggable();
+	}
 	return func;
 }
 
@@ -208,17 +223,17 @@ Graph.prototype.createFuncNode = function(type, centerx, centery, width, height)
 // 	return func;
 // }
 
-Graph.prototype.createStretchNode = function(centerx, centery, width, height){
+// Graph.prototype.createStretchNode = function(centerx, centery, width, height){
 
-	var w = width  ?  width : 100;
-	var h = height ? height :  50;
-	var xmin = centerx - w / 2;
-	var ymin = centery - h / 2;
+// 	var w = width  ?  width : 100;
+// 	var h = height ? height :  50;
+// 	var xmin = centerx - w / 2;
+// 	var ymin = centery - h / 2;
 
-	var nodeManager = NodeManager.getInstance();
-	var func = nodeManager.createStretchNode(this._r, xmin, ymin, w, h);
-	return func;
-}
+// 	var nodeManager = NodeManager.getInstance();
+// 	var func = nodeManager.createStretchNode(this._r, xmin, ymin, w, h);
+// 	return func;
+// }
 
 Graph.prototype.getFunctions = function(){
 	// var funcManager = FuncManager.getInstance();

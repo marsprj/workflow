@@ -25,6 +25,7 @@ var Node = function(r){
 	this._type = WIDGET_TYPE.DATA;
 	this._name = "";
 	this._shape = null;
+	this._isDraggable = false;
 }
 
 Node.prototype.getName = function(){
@@ -32,6 +33,10 @@ Node.prototype.getName = function(){
 }
 
 Node.prototype.draggable = function(){
+
+	if(this._isDraggable){
+		return;
+	}
 
 	var ex=0, ey=0;
 	var that = this;
@@ -54,6 +59,7 @@ Node.prototype.draggable = function(){
 		var element = this._shape.getElement();
 		if(element){
 			element.drag(move, start, end);
+			this._isDraggable = true;
 		}
 	}
 }
@@ -65,6 +71,7 @@ Node.prototype.showText = function(){
 }
 
 Node.prototype.undrag = function(){
+	this._isDraggable = false;
 	if(this._shape){
 		this._shape.undrag();
 	}
