@@ -52,7 +52,7 @@ $().ready(function(){
 
 	initGraph();
 
-	g_dlg = new Dialog();
+	g_dlg = new StretchDialog();
 	g_dlg.show();
 })
 
