@@ -15,6 +15,11 @@ var DataNode = function(r, xmin, ymin, width, height){
 
 	this._from = null;
 	this._to   = null;
+
+	var that = this;
+	this._shape.dblclick(function(){
+		alert(that._name);
+	});
 }
 
 extend(DataNode, Node);

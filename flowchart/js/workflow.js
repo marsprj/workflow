@@ -1,3 +1,21 @@
+//=====================================================
+var input, output, func;
+//绘制链接线的状态
+var STATE = {
+	DRAW : "draw",
+	CONNECT : "connect",
+	NONE : "none"
+}
+var CONNECT_STATE = {		
+	READY : "ready",
+	CONNECTING : "connecting",
+	NONE : "none"	
+}
+var g_state = STATE.CONNECT;
+var g_connect_state = CONNECT_STATE.NONE;
+//=====================================================
+
+var g_graph = null;
 var g_func_type = null;
 
 var g_functions = [{
@@ -10,6 +28,8 @@ var g_functions = [{
 ]
 
 $().ready(function(){
+
+	g_graph = new Graph("canvas");
 
 	loadFunctions();
 	initMenuEvents();

@@ -439,3 +439,9 @@ Shape.prototype.stopConnecting = function(){
 		that._connection_listener.ou,
 	);
 }
+
+Shape.prototype.dblclick = function(f){
+	if(this._shape){
+		this._shape.dblclick(f);
+	}
+}

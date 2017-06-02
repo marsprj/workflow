@@ -130,8 +130,8 @@ html, body{
 }
 
 .func_wrapper:hover{
-	background-color: #dff1f9阿;
-	cursor : "pointer";
+	background-color: #dff1f9;
+	cursor : pointer;
 }
 
 .func_icon{
