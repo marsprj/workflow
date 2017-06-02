@@ -15,6 +15,9 @@ var g_state = STATE.CONNECT;
 var g_connect_state = CONNECT_STATE.NONE;
 //=====================================================
 
+//=====================================================
+// Global Variables Begin
+//=====================================================
 var g_graph = null;
 var g_func_type = null;
 
@@ -26,6 +29,17 @@ var g_functions = [{
 		description : "融合"
 	}
 ]
+//=====================================================
+// Global Variables Begin
+//=====================================================
+
+//=====================================================
+// Test Begin
+//=====================================================
+var g_dlg;
+//=====================================================
+// Test End
+//=====================================================
 
 $().ready(function(){
 
@@ -37,6 +51,9 @@ $().ready(function(){
 	initCanvasEvent();
 
 	initGraph();
+
+	g_dlg = new Dialog();
+	g_dlg.show();
 })
 
 function initGraph(){
@@ -110,13 +127,16 @@ function initMenuEvents(){
 	$("#save").click(function(){
 		//g_graph.serialize();
 		//document.getElementById("result").innerHTML = g_graph.getWorkflowText();
-		document.getElementById("result").innerHTML = g_graph.export();
+		//document.getElementById("result").innerHTML = g_graph.export();
+		g_dlg.show();
 	})
 	$("#load").click(function(){
-		alert("load");
+		//alert("load");
+		g_dlg.close();
 	})
 	$("#run").click(function(){
-		alert("run");
+		//alert("run");
+		g_dlg.destory();
 	})
 
 

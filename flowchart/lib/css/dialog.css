@@ -51,7 +51,12 @@
 	float:left;
 }
 
-.dialog_input{
+.dialog_input {
+	width:320px;
+	margin-left:20px;
+}
+
+.dialog_output{
 	width:320px;
 	margin-left:20px;
 }
@@ -63,6 +68,10 @@
 	background-image: url(../images/folder_open_16.png);
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+.dialog_folder:hover{
+	cursor : pointer;
 }
 
 .dialog_bottom{
