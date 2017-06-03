@@ -11,29 +11,41 @@ extend(FileDialog, Dialog)
 FileDialog.prototype.initEvents = function(){
 	
 	//打开文件的点击事件
-	this.initFolderEvent();
+	this.initUpwardEvent();
+	this.initFileEvent();
 	this.initCloseEvent();
 	this.initOkEvent();
 }
 
 
-FileDialog.prototype.initFolderEvent = function(){
+FileDialog.prototype.initUpwardEvent = function(){
 
-	this._win.find(".dialog_folder").each(function(){
+	this._win.find(".dialog_folder_up").each(function(){
 		$(this).click(function(){
-			$(this).prev().find('.dialog_input').each(function(){
-				//设置输入影像数据路径的值
-				$(this).attr("value", "/raster/001.tif");
-			})
-
-			$(this).prev().find('.dialog_output').each(function(){
-				//设置输入影像数据路径的值
-				$(this).attr("value", "/raster/002.tif");
-			})
+			alert("upwards");
 		});
-	})	
+	});
 }
 
+FileDialog.prototype.initFileEvent = function(){
+	this._win.find(".item_container").each(function(){
+		var type = $(this).attr("type");
+		switch(type){
+			case "folder":{
+				$(this).dblclick(function(){
+					alert("dblclick");
+				});
+			}
+			break;
+			case "file":{
+				$(this).click(function(){
+					alert("click");
+				});
+			}
+		}
+	});	
+}
+ 
 FileDialog.prototype.initCloseEvent = function(){
 	var dlg = this;
 	this._win.find(".dialog_exit:first").click(function(){
@@ -70,51 +82,51 @@ FileDialog.prototype.create = function(){
 			+"	<div class='dialog_main'>"
 			+"		<div class='dialog_file_path_wrapper'>"
 			+"			<span>路径:</span>"
-			+"			<input type='text' class='dialog_folder_path' readonly='readonly'>"
+			+"			<input type='text' class='dialog_folder_path' readonly='readonly' value='/'>"
 			+"			<div class='dialog_folder_up'></div>"
 			+"		</div>"
 			+"		<div class='dialog_file_ctrl'>"
 			+"			<ul>"
 			+"				<li>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='folder'>"
 			+"						<div class='folder_item_icon'></div>"
 			+"						<div class='folder_item_text'>raster</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='folder'>"
 			+"						<div class='folder_item_icon'></div>"
 			+"						<div class='folder_item_text'>dem</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='folder'>"
 			+"						<div class='folder_item_icon'></div>"
 			+"						<div class='folder_item_text'>world-2.tif</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='folder'>"
 			+"						<div class='folder_item_icon'></div>"
 			+"						<div class='folder_item_text'>world-2.tif</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='folder'>"
 			+"						<div class='folder_item_icon'></div>"
 			+"						<div class='folder_item_text'>world-2.tif</div>"
 			+"					</div>"
 			+"				</li>"
 			+"				<li>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='file'>"
 			+"						<div class='file_item_icon'></div>"
 			+"						<div class='folder_item_text'>raster</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='file'>"
 			+"						<div class='file_item_icon'></div>"
 			+"						<div class='folder_item_text'>dem</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='file'>"
 			+"						<div class='file_item_icon'></div>"
 			+"						<div class='folder_item_text'>world-2.tif</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='file'>"
 			+"						<div class='file_item_icon'></div>"
 			+"						<div class='folder_item_text'>world-2.tif</div>"
 			+"					</div>"
-			+"					<div class='item_container'>"
+			+"					<div class='item_container' type='file'>"
 			+"						<div class='file_item_icon'></div>"
 			+"						<div class='folder_item_text'>world-2.tif</div>"
 			+"					</div>"
@@ -125,10 +137,10 @@ FileDialog.prototype.create = function(){
 			+"	<div class='dialog_bottom'>"
 			+"		<ul>"
 			+"			<li>"
-			+"				<a href='javascript:void(0)'>确定</a>"
+			+"				<a href='javascript:void(0)' id='dlg_btn_ok'>确定</a>"
 			+"			</li>"
 			+"			<li>"
-			+"				<a href='javascript:void(0)'>取消</a>"
+			+"				<a href='javascript:void(0)' id='dlg_btn_exit'>取消</a>"
 			+"			</li>"
 			+"		</ul>"
 			+"	</div>"

@@ -17,5 +17,7 @@ Dialog.prototype.destory = function(){
 }
 
 Dialog.prototype.initEvents = function(){
-	
+	// this.initFolderEvent();
+	// this.initCloseEvent();
+	// this.initOkEvent();
 }

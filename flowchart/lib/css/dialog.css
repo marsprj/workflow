@@ -136,6 +136,10 @@
 	background-position: center;
 }
 
+.dialog_folder_up:hover{
+	background-color: #e0ecf6;
+}
+
 .dialog_file_ctrl{
 	height: 360px;
     margin: 0px 10px;
