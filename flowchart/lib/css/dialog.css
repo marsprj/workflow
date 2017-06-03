@@ -111,17 +111,83 @@
 	border: 1px solid #aaaaaa;
 }
 
+.file_dialog{
+	left: 300px;
+	top: 80px;
+	width: 700px;
+	height: 500px;
+}
+
 .dialog_file_path_wrapper{
     margin: 10px 0px;
     padding: 0px 10px;
 }
 
-.dialog_file_path{
-    width: 345px	;
+.dialog_folder_path{
+    width: 620px;
+}
+
+.dialog_folder_up{
+	float: right;
+    width: 20px	;
+    height: 20px	;
+    background-image: url(../images/upward_16.png);
+    background-repeat: no-repeat;
+	background-position: center;
 }
 
 .dialog_file_ctrl{
-	height: 200px;
+	height: 360px;
     margin: 0px 10px;
     border: 1px solid #aaaaaa;
+}
+
+.dialog_file_ctrl ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.dialog_file_ctrl ul li{
+    height: 30px;
+    margin: 5px 10px;
+    /*border: 1px solid #000000;*/
+    /*background-color: red;*/
+}
+
+.dialog_file_ctrl .item_container{
+	float: left;
+	width: 120px;
+	height: 100%;
+	margin: 0px 5px 0px 0px;
+	/*border: 1px solid #000000;*/
+}
+
+.dialog_file_ctrl .item_container:hover{
+	cursor : pointer;
+	background-color: #e0ecf6;
+}
+
+.folder_item_icon{
+	float: left;
+	width: 24px;
+	margin: 0px 3px;
+	height: 100%;
+	background-image: url(../images/folder_24.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.file_item_icon{
+	float: left;
+	width: 24px;
+	margin: 0px 3px;
+	height: 100%;
+	background-image: url(../images/file_24.png);
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.folder_item_text{
+	height: 30px;
+	line-height: 30px;
 }

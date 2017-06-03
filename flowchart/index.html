@@ -48,7 +48,7 @@
 	</div>
 
 	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-	<div class="func_dialog">
+<!-- 	<div class="func_dialog file_dialog">
 		<div class='titlebar'>
 			<div class="dialog_title">文件</div>
 			<div class="dialog_exit"></div>
@@ -56,10 +56,56 @@
 		<div class="dialog_main">
 			<div class="dialog_file_path_wrapper">
 				<span>路径:</span>
-				<input type="text" class='dialog_file_path' readonly="readonly">
+				<input type="text" class='dialog_folder_path' readonly="readonly">
+				<div class="dialog_folder_up"></div>
 			</div>
 			<div class='dialog_file_ctrl'>
-				dfa
+				<ul>
+					<li>
+						<div class="item_container">
+							<div class="folder_item_icon"></div>
+							<div class="folder_item_text">raster</div>
+						</div>
+						<div class="item_container">
+							<div class="folder_item_icon"></div>
+							<div class="folder_item_text">dem</div>
+						</div>
+						<div class="item_container">
+							<div class="folder_item_icon"></div>
+							<div class="folder_item_text">world-2.tif</div>
+						</div>
+						<div class="item_container">
+							<div class="folder_item_icon"></div>
+							<div class="folder_item_text">world-2.tif</div>
+						</div>
+						<div class="item_container">
+							<div class="folder_item_icon"></div>
+							<div class="folder_item_text">world-2.tif</div>
+						</div>
+					</li>
+					<li>
+						<div class="item_container">
+							<div class="file_item_icon"></div>
+							<div class="folder_item_text">raster</div>
+						</div>
+						<div class="item_container">
+							<div class="file_item_icon"></div>
+							<div class="folder_item_text">dem</div>
+						</div>
+						<div class="item_container">
+							<div class="file_item_icon"></div>
+							<div class="folder_item_text">world-2.tif</div>
+						</div>
+						<div class="item_container">
+							<div class="file_item_icon"></div>
+							<div class="folder_item_text">world-2.tif</div>
+						</div>
+						<div class="item_container">
+							<div class="file_item_icon"></div>
+							<div class="folder_item_text">world-2.tif</div>
+						</div>
+					</li>
+				</ul>
 			</div>		
 		</div>	
 		<div class="dialog_bottom">
@@ -72,9 +118,8 @@
 				</li>
 			</ul>
 		</div>
-
-		
-	</div>
+	</div> -->
+	<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 </body>
 </html>
 
@@ -98,6 +143,7 @@
 
 <script type="text/javascript" src="lib/Graph.js"></script>
 <script type="text/javascript" src="lib/Dialog.js"></script>
+<script type="text/javascript" src="lib/Dialog/FileDialog.js"></script>
 <script type="text/javascript" src="lib/Dialog/StretchDialog.js"></script>
 
 <script type="text/javascript" src="js/workflow.js"></script>
