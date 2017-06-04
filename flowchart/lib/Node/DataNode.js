@@ -5,24 +5,40 @@ var DataNode = function(r, xmin, ymin, width, height){
 	this._r = r;
 	this._type = "data";
 	this._name = "data";
+	this._path = "/raster/";
 
 	this._shape = new Ellipse(r, xmin, ymin, width, height);
 	this._id = this._shape.getID();
 
-	//this._shape.initListener();
-	//this._shape.enableHover();
-	//this.showText();
-
 	this._from = null;
 	this._to   = null;
 
-	var that = this;
+	var node = this;
 	this._shape.dblclick(function(){
-		alert(that._name);
+		var dlg = new FileDialog(node.getPath(), function(){
+			node.setPath(dlg.getFilePath());
+		});
+		dlg.show();
 	});
 }
 
 extend(DataNode, Node);
+
+DataNode.prototype.setPath = function(path){
+
+	this._path = path;
+	var text = "";
+	var sep = path.lastIndexOf("/");
+	if(sep>=0){
+		text = path.substring(sep+1);
+	}
+	this.setName(text);
+	//this.showText();
+}
+
+DataNode.prototype.getPath = function(){
+	return this._path;
+}
 
 DataNode.prototype.setFromEdge = function(from){
 	this._from = from;

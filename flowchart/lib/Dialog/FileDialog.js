@@ -1,13 +1,12 @@
-var FileDialog = function(){
+var FileDialog = function(path, onOK){
 
 	Dialog.apply(this, arguments);
 
 	this._file_path = null;
-	this._onOK = null;
+	this._onOK = onOK;
 
-	var path = "/raster/world/asia/";
-	this.setPath("/raster/world/asia/");
-	
+	this.setPath(path ? path : "/");
+	this.populateFolders();
 }
 
 extend(FileDialog, Dialog)
@@ -42,7 +41,7 @@ FileDialog.prototype.initFileEvent = function(){
 					var fldName = $(this).find('.folder_item_text:first').text();
 					var newPath = dlg.makeFolderPath(curPath, fldName);
 					dlg.setPath(newPath);
-					dlg.populateFolders(newPath);
+					dlg.populateFolders();
 					dlg._file_path = null;
 				});
 			}
@@ -100,7 +99,7 @@ FileDialog.prototype.getFilePath = function(){
 	return this._file_path;
 }
 
-FileDialog.prototype.populateFolders = function(path){
+FileDialog.prototype.populateFolders = function(){
 	var json = [{
 			name : "raster",
 			type : "folder"
@@ -151,7 +150,7 @@ FileDialog.prototype.upwards = function(){
 	if( pos>0 ){
 		var parentPath = curPath.substring(0, pos) + "/";
 		this.setPath(parentPath);
-		this.populateFolders(parentPath);
+		this.populateFolders();
 	}
 }
 

@@ -28,6 +28,11 @@ var Node = function(r){
 	this._isDraggable = false;
 }
 
+Node.prototype.setName = function(name){
+	this._name = name;
+	this.showText();
+}
+
 Node.prototype.getName = function(){
 	return this._name;
 }
@@ -65,9 +70,10 @@ Node.prototype.draggable = function(){
 }
 
 Node.prototype.showText = function(){
-	var id = this.getID();
-	var text = this._name + "\r\n" + id;
-	this._shape.showText(text);
+	// var id = this.getID();
+	// var text = this._name + "\r\n" + id;
+	// this._shape.showText(text);
+	this._shape.showText(this._name);
 }
 
 Node.prototype.undrag = function(){
