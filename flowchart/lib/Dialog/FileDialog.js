@@ -88,7 +88,14 @@ FileDialog.prototype.initOkEvent = function(){
 
 FileDialog.prototype.setPath = function(path){
 	this._path = path;
-	$(".dialog_folder_path").attr("value", path);
+	var folder = "/";
+	if(path[path.length-1]=="/"){
+		folder = path;
+	}
+	else{
+		folder = path.substring(0, path.lastIndexOf("/"));
+	}
+	$(".dialog_folder_path").attr("value", folder);
 }
 
 FileDialog.prototype.getPath = function(path){

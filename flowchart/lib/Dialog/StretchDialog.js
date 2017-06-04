@@ -1,4 +1,4 @@
-var StretchDialog = function(input, output, onOK){
+	var StretchDialog = function(input, output, onOK){
 
 	Dialog.apply(this, arguments);
 
@@ -30,10 +30,10 @@ StretchDialog.prototype.initFolderEvent = function(){
 				//设置输入影像数据路径的值
 				//$(this).attr("value", "/raster/001.tif");
 				var input_box = this;
-				var file_dlg = new FileDialog(this._input);
+				var file_dlg = new FileDialog(dlg._input);
 				file_dlg.onOK(function(){
 					var file_path = file_dlg.getFilePath();
-					$(input_box).attr("value", file_path);
+					dlg.setInput(file_path);
 				});
 				file_dlg.show();
 			})
@@ -41,10 +41,10 @@ StretchDialog.prototype.initFolderEvent = function(){
 			$(this).prev().find('.dialog_output').each(function(){
 				//设置输入影像数据路径的值
 				var input_box = this;
-				var file_dlg = new FileDialog(this._output);
+				var file_dlg = new FileDialog(dlg._output);
 				file_dlg.onOK(function(){
 					var file_path = file_dlg.getFilePath();
-					$(input_box).attr("value", file_path);
+					dlg.setOutput(file_path);
 				});
 				file_dlg.show();
 			})
