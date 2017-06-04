@@ -2,12 +2,12 @@ var FileDialog = function(){
 
 	Dialog.apply(this, arguments);
 
-	this._input = null;
-	this._output = null;
+	this._file_path = null;
+	this._onOK = null;
 
 	var path = "/raster/world/asia/";
 	this.setPath("/raster/world/asia/");
-	//this.populateFolders(path);
+	
 }
 
 extend(FileDialog, Dialog)
@@ -43,11 +43,16 @@ FileDialog.prototype.initFileEvent = function(){
 					var newPath = dlg.makeFolderPath(curPath, fldName);
 					dlg.setPath(newPath);
 					dlg.populateFolders(newPath);
+					dlg._file_path = null;
 				});
 			}
 			break;
 			case "file":{
 				$(this).click(function(){
+					var curPath = dlg.getPath();
+					var filName = $(this).find('.folder_item_text:first').text();
+					dlg._file_path = dlg.makeFilePath(curPath, filName);
+
 					$("#dialog_file_ctrl .item_container").css("background-color", "#ffffff");
 					$(this).css("background-color", "#e0ecf6");
 				});
@@ -69,13 +74,18 @@ FileDialog.prototype.initCloseEvent = function(){
 
 FileDialog.prototype.initOkEvent = function(){
 	var dlg = this;
+	this._ok = true;
 	
 	this._win.find("#dlg_btn_ok:first").click(function(){
-		dlg._input  = dlg._win.find(".dialog_input:first").attr("value");
-		dlg._output = dlg._win.find(".dialog_output:first").attr("value");
 		dlg.destory();
+
+		if(dlg._onOK){
+			dlg._onOK();
+		}
 	});
 }
+
+
 
 FileDialog.prototype.setPath = function(path){
 	this._path = path;
@@ -84,6 +94,10 @@ FileDialog.prototype.setPath = function(path){
 
 FileDialog.prototype.getPath = function(path){
 	return $(".dialog_folder_path").attr("value");	
+}
+
+FileDialog.prototype.getFilePath = function(){
+	return this._file_path;
 }
 
 FileDialog.prototype.populateFolders = function(path){
@@ -144,6 +158,15 @@ FileDialog.prototype.upwards = function(){
 FileDialog.prototype.makeFolderPath = function(folderPath, folderame){
 	return folderPath + folderame + "/";
 }
+
+FileDialog.prototype.makeFilePath = function(folderPath, fileName){
+	return folderPath + fileName;
+}
+
+FileDialog.prototype.onOK = function(func){
+	this._onOK = func;
+}
+
 
 FileDialog.prototype.create = function(){
 	var html = "<div class='func_dialog file_dialog'>"

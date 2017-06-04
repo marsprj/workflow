@@ -1,5 +1,6 @@
 var Dialog = function(){
 
+	this._ok = false;
 	this._win = this.create();
 	this.initEvents();
 }
@@ -20,4 +21,8 @@ Dialog.prototype.initEvents = function(){
 	// this.initFolderEvent();
 	// this.initCloseEvent();
 	// this.initOkEvent();
+}
+
+Dialog.prototype.isOK = function(){
+	return this._ok;
 }

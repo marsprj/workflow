@@ -53,7 +53,7 @@ $().ready(function(){
 	initGraph();
 
 	// g_dlg = new StretchDialog();
-	g_dlg = new FileDialog();
+	// g_dlg = new FileDialog();
 	// g_dlg.show();
 })
 

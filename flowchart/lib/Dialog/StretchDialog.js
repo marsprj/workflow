@@ -1,9 +1,11 @@
-var StretchDialog = function(){
+var StretchDialog = function(onOK){
 
 	Dialog.apply(this, arguments);
 
 	this._input = null;
 	this._output = null;
+
+	this._onOK = onOK;
 }
 
 extend(StretchDialog, Dialog)
@@ -19,16 +21,30 @@ StretchDialog.prototype.initEvents = function(){
 
 StretchDialog.prototype.initFolderEvent = function(){
 
+	var dlg = this;
 	this._win.find(".dialog_folder").each(function(){
 		$(this).click(function(){
 			$(this).prev().find('.dialog_input').each(function(){
 				//设置输入影像数据路径的值
-				$(this).attr("value", "/raster/001.tif");
+				//$(this).attr("value", "/raster/001.tif");
+				var input_box = this;
+				var file_dlg = new FileDialog();
+				file_dlg.onOK(function(){
+					var file_path = file_dlg.getFilePath();
+					$(input_box).attr("value", file_path);
+				});
+				file_dlg.show();
 			})
 
 			$(this).prev().find('.dialog_output').each(function(){
 				//设置输入影像数据路径的值
-				$(this).attr("value", "/raster/002.tif");
+				var input_box = this;
+				var file_dlg = new FileDialog();
+				file_dlg.onOK(function(){
+					var file_path = file_dlg.getFilePath();
+					$(input_box).attr("value", file_path);
+				});
+				file_dlg.show();
 			})
 		});
 	})	
@@ -52,6 +68,10 @@ StretchDialog.prototype.initOkEvent = function(){
 		dlg._input  = dlg._win.find(".dialog_input:first").attr("value");
 		dlg._output = dlg._win.find(".dialog_output:first").attr("value");
 		dlg.destory();
+
+		if(dlg._onOK){
+			dlg._onOK();
+		}
 	});
 }
 
@@ -60,6 +80,9 @@ StretchDialog.prototype.getInput = function(){
 	return this._input;
 }
 
+StretchDialog.prototype.getOutput = function(){
+	return this._output;
+}
 
 StretchDialog.prototype.create = function(){
 	var html =   "<div class='func_dialog'>"

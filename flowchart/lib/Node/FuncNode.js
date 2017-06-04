@@ -12,9 +12,9 @@ var FuncNode = function(r, xmin, ymin, width, height){
 	this._shape = new Rect(r, xmin, ymin, width, height);
 
 	var that = this;
-	this._shape.dblclick(function(){
-		alert(that._name);
-	});
+	// this._shape.dblclick(function(){
+	// 	alert(that._name);
+	// });
 }
 
 extend(FuncNode, Node);
