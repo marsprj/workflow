@@ -4,6 +4,10 @@ var FileDialog = function(){
 
 	this._input = null;
 	this._output = null;
+
+	var path = "/raster/world/asia/";
+	this.setPath("/raster/world/asia/");
+	//this.populateFolders(path);
 }
 
 extend(FileDialog, Dialog)
@@ -20,26 +24,32 @@ FileDialog.prototype.initEvents = function(){
 
 FileDialog.prototype.initUpwardEvent = function(){
 
-	this._win.find(".dialog_folder_up").each(function(){
-		$(this).click(function(){
-			alert("upwards");
-		});
+	var dlg = this;
+	this._win.find(".dialog_folder_up:first").click(function(){
+		dlg.upwards();
 	});
 }
 
 FileDialog.prototype.initFileEvent = function(){
+	var dlg = this;
 	this._win.find(".item_container").each(function(){
+		var container = this;
 		var type = $(this).attr("type");
 		switch(type){
 			case "folder":{
 				$(this).dblclick(function(){
-					alert("dblclick");
+					var curPath = dlg.getPath();
+					var fldName = $(this).find('.folder_item_text:first').text();
+					var newPath = dlg.makeFolderPath(curPath, fldName);
+					dlg.setPath(newPath);
+					dlg.populateFolders(newPath);
 				});
 			}
 			break;
 			case "file":{
 				$(this).click(function(){
-					alert("click");
+					$("#dialog_file_ctrl .item_container").css("background-color", "#ffffff");
+					$(this).css("background-color", "#e0ecf6");
 				});
 			}
 		}
@@ -67,11 +77,73 @@ FileDialog.prototype.initOkEvent = function(){
 	});
 }
 
-
-FileDialog.prototype.getInput = function(){
-	return this._input;
+FileDialog.prototype.setPath = function(path){
+	this._path = path;
+	$(".dialog_folder_path").attr("value", path);
 }
 
+FileDialog.prototype.getPath = function(path){
+	return $(".dialog_folder_path").attr("value");	
+}
+
+FileDialog.prototype.populateFolders = function(path){
+	var json = [{
+			name : "raster",
+			type : "folder"
+		},{
+			name : "dem",
+			type : "folder"
+		},{
+			name : "vector",
+			type : "folder"
+		},{
+			name : "sar",
+			type : "folder"
+		},{
+			name : "world-1.tif",
+			type : "file"
+		},{
+			name : "world-2.jpg",
+			type : "file"
+		},{
+			name : "world-3.png",
+			type : "file"
+		}
+	];
+
+	var html = "";
+	for(var i in json){
+		var o = json[i];
+		var icon = (o.type == "folder" ? "folder_item_icon" : "file_item_icon");
+		html += "<div class='item_container' type='" + o.type + "'>";
+		html += "<div class='" + icon + "'></div>";
+		html += "<div class='folder_item_text'>" + o.name + "</div>";
+		html += "</div>";
+	}
+	document.getElementById("dialog_file_ctrl").innerHTML = html;
+	this.initFileEvent();
+}
+
+FileDialog.prototype.upwards = function(){
+	var curPath = this.getPath();
+	if(curPath.length==0){
+		return;
+	}
+	if(curPath == "/"){
+		return;
+	}
+
+	var pos = curPath.lastIndexOf("/", curPath.length-2);
+	if( pos>0 ){
+		var parentPath = curPath.substring(0, pos) + "/";
+		this.setPath(parentPath);
+		this.populateFolders(parentPath);
+	}
+}
+
+FileDialog.prototype.makeFolderPath = function(folderPath, folderame){
+	return folderPath + folderame + "/";
+}
 
 FileDialog.prototype.create = function(){
 	var html = "<div class='func_dialog file_dialog'>"
@@ -85,53 +157,47 @@ FileDialog.prototype.create = function(){
 			+"			<input type='text' class='dialog_folder_path' readonly='readonly' value='/'>"
 			+"			<div class='dialog_folder_up'></div>"
 			+"		</div>"
-			+"		<div class='dialog_file_ctrl'>"
-			+"			<ul>"
-			+"				<li>"
-			+"					<div class='item_container' type='folder'>"
-			+"						<div class='folder_item_icon'></div>"
-			+"						<div class='folder_item_text'>raster</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='folder'>"
-			+"						<div class='folder_item_icon'></div>"
-			+"						<div class='folder_item_text'>dem</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='folder'>"
-			+"						<div class='folder_item_icon'></div>"
-			+"						<div class='folder_item_text'>world-2.tif</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='folder'>"
-			+"						<div class='folder_item_icon'></div>"
-			+"						<div class='folder_item_text'>world-2.tif</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='folder'>"
-			+"						<div class='folder_item_icon'></div>"
-			+"						<div class='folder_item_text'>world-2.tif</div>"
-			+"					</div>"
-			+"				</li>"
-			+"				<li>"
-			+"					<div class='item_container' type='file'>"
-			+"						<div class='file_item_icon'></div>"
-			+"						<div class='folder_item_text'>raster</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='file'>"
-			+"						<div class='file_item_icon'></div>"
-			+"						<div class='folder_item_text'>dem</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='file'>"
-			+"						<div class='file_item_icon'></div>"
-			+"						<div class='folder_item_text'>world-2.tif</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='file'>"
-			+"						<div class='file_item_icon'></div>"
-			+"						<div class='folder_item_text'>world-2.tif</div>"
-			+"					</div>"
-			+"					<div class='item_container' type='file'>"
-			+"						<div class='file_item_icon'></div>"
-			+"						<div class='folder_item_text'>world-2.tif</div>"
-			+"					</div>"
-			+"				</li>"
-			+"			</ul>"
+			+"		<div id='dialog_file_ctrl'>"
+			+"			<div class='item_container' type='folder'>"
+			+"				<div class='folder_item_icon'></div>"
+			+"				<div class='folder_item_text'>raster</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='folder'>"
+			+"				<div class='folder_item_icon'></div>"
+			+"				<div class='folder_item_text'>dem</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='folder'>"
+			+"				<div class='folder_item_icon'></div>"
+			+"				<div class='folder_item_text'>world-2.tif</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='folder'>"
+			+"				<div class='folder_item_icon'></div>"
+			+"				<div class='folder_item_text'>world-2.tif</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='folder'>"
+			+"				<div class='folder_item_icon'></div>"
+			+"				<div class='folder_item_text'>world-2.tif</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='file'>"
+			+"				<div class='file_item_icon'></div>"
+			+"				<div class='folder_item_text'>raster</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='file'>"
+			+"				<div class='file_item_icon'></div>"
+			+"				<div class='folder_item_text'>dem</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='file'>"
+			+"				<div class='file_item_icon'></div>"
+			+"				<div class='folder_item_text'>world-2.tif</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='file'>"
+			+"				<div class='file_item_icon'></div>"
+			+"				<div class='folder_item_text'>world-2.tif</div>"
+			+"			</div>"
+			+"			<div class='item_container' type='file'>"
+			+"				<div class='file_item_icon'></div>"
+			+"				<div class='folder_item_text'>world-2.tif</div>"
+			+"			</div>"
 			+"		</div>"
 			+"	</div>"
 			+"	<div class='dialog_bottom'>"
@@ -148,4 +214,8 @@ FileDialog.prototype.create = function(){
 	var dlg = $(html);
 	$('body').append(dlg);
 	return dlg;
+}
+
+FileDialog.prototype.echo = function(){
+	alert("file dialog");
 }

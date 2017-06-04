@@ -140,33 +140,23 @@
 	background-color: #e0ecf6;
 }
 
-.dialog_file_ctrl{
-	height: 360px;
+#dialog_file_ctrl{
+	height: 340px;
     margin: 0px 10px;
+    padding: 5px;
     border: 1px solid #aaaaaa;
 }
 
-.dialog_file_ctrl ul {
-    list-style: none;
-    padding: 0px;
-}
 
-.dialog_file_ctrl ul li{
-    height: 30px;
-    margin: 5px 10px;
-    /*border: 1px solid #000000;*/
-    /*background-color: red;*/
-}
-
-.dialog_file_ctrl .item_container{
+#dialog_file_ctrl .item_container{
 	float: left;
-	width: 120px;
-	height: 100%;
+	width: 125px;
+	height: 30px;
 	margin: 0px 5px 0px 0px;
 	/*border: 1px solid #000000;*/
 }
 
-.dialog_file_ctrl .item_container:hover{
+#dialog_file_ctrl .item_container:hover{
 	cursor : pointer;
 	background-color: #e0ecf6;
 }
