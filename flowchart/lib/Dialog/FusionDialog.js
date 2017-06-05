@@ -1,14 +1,52 @@
-var FusionDialog = function(onOK){
+var FusionDialog = function(inputs, outout, onOK){
 
 	Dialog.apply(this, arguments);
 
-	this._input = null;
-	this._output = null;
+	this.setInputs(inputs);
+	this.setOutput(output);
+	this.setOutput(output);
 
 	this._onOK = onOK;
 }
 
 extend(FusionDialog, Dialog)
+
+FusionDialog.prototype.setInputs = function(inputs){
+	if(!inputs){
+		return;
+	}
+
+	switch(inputs.length){
+		case 0:{
+			this.setInput1(null);
+			this.setInput2(null);
+
+		}
+		case 1:{
+			this.setInput1(inputs[0]);
+			this.setInput2(null);
+		}
+		default:{
+			this.setInput1(inputs[0]);
+			this.setInput2(inputs[1]);
+		}
+	}
+}
+
+FusionDialog.prototype.setInput1 = function(input){
+	this._input1 = input ? input : "/";
+	this._win.find('#fusion_input_1').attr("value", input);
+}
+
+FusionDialog.prototype.setInput2 = function(input){
+	this._input2 = input ? input : "/";
+	this._win.find('#fusion_input_2').attr("value", input);
+}
+
+FusionDialog.prototype.setOutput = function(output){
+	this._output = output;
+	this._win.find('#fusion_output').attr("value", output);
+}
 
 FusionDialog.prototype.initEvents = function(){
 	
@@ -97,7 +135,7 @@ FusionDialog.prototype.create = function(){
 			+"			<div class='dialog_item_title'>输入影像:</div>"
 			+"		</div>"
 			+"		<div>"
-			+"			<div style='float:left;'><input type='text' class='dialog_input'></div>"
+			+"			<div style='float:left;'><input type='text' id='fusion_input_1' class='dialog_input'></div>"
 			+"			<div class='dialog_folder'></div>"
 			+"		</div>"
 			+"	</div>"
@@ -107,7 +145,7 @@ FusionDialog.prototype.create = function(){
 			+"			<div class='dialog_item_title'>输入影像:</div>"
 			+"		</div>"
 			+"		<div>"
-			+"			<div style='float:left;'><input type='text' class='dialog_input'></div>"
+			+"			<div style='float:left;'><input type='text' id='fusion_input_2' class='dialog_input'></div>"
 			+"			<div class='dialog_folder'></div>"
 			+"		</div>"
 			+"	</div>"
@@ -117,7 +155,7 @@ FusionDialog.prototype.create = function(){
 			+"			<div class='dialog_item_title'>输出影像:</div>"
 			+"		</div>"
 			+"		<div>"
-			+"			<div style='float:left;'><input type='text' class='dialog_output'></div>"
+			+"			<div style='float:left;'><input type='text' id='fusion_output' class='dialog_output'></div>"
 			+"			<div class='dialog_folder'></div>"
 			+"		</div>"
 			+"	</div>"

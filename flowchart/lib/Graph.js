@@ -65,44 +65,84 @@ Graph.prototype.serialize = function(){
 	this.populateParentFunc(tail, this._workflow);
 }
 
+Graph.prototype.load = function(model){
+
+	//
+
+}
+
 Graph.prototype.export = function(){
 	
-	this.serialize();
+	var tail = this.findLastFunction();
 
-	var wf = [];
-
-	for(var i=this._workflow.length-1; i>=0; i--){
-		var node = this._workflow[i];		
-		var func = {
-			id : node.getID(),
-			type : node.getType(),
-			name : node.getName(),
-			inputs : [],
-			output : null
+	/**
+	 * 1. model由一系列的function构成
+	 * 2. 每个function由三个参数构成
+	 * 	  1) inputs: 输入
+	 * 	  	         输入是一个集合，一个function可能有多个input
+	 * 	  	         input有两个来源
+	 * 	  	         <1> function的输出
+	 * 	  	         <2> data本身
+	 * 	  2) output: 输出
+	 * 	  			 一个Data节点
+	 * 	  3) params: 参数
+	 * 	  			 一些参数，例如buffer需要设置半径
+	 * @type {Object}
+	 */
+	var model = {
+		name : "this model",
+		functions:[{
+			input : []
 		}
-		var inputs = node.getInputs();
-		inputs.forEach(function(n){
-			var inp = {
-				id : n.getID(),
-				type : n.getType(),
-				name : node.getName(),
-			}
-			func.inputs.push(inp);
-		})
-		var output = node.getOutput();
-		if(output){
-			var oup = {
-				id : output.getID(),
-				type : output.getType(),	
-				name : node.getName(),
-			}
-			func.output = oup;	
-		}
-		wf.push(func);
-	}
+		],
+		data:[
+		],
+		model:{
 
-	return JSON.stringify(wf);
+		}
+	};
+
+	return JSON.stringify(model);
 }
+
+// Graph.prototype.export = function(){
+	
+// 	this.serialize();
+
+// 	var wf = [];
+
+// 	for(var i=this._workflow.length-1; i>=0; i--){
+// 		var node = this._workflow[i];		
+// 		var func = {
+// 			id : node.getID(),
+// 			type : node.getType(),
+// 			name : node.getName(),
+// 			inputs : [],
+// 			output : null
+// 		}
+// 		var inputs = node.getInputs();
+// 		inputs.forEach(function(n){
+// 			var inp = {
+// 				id : n.getID(),
+// 				type : n.getType(),
+// 				name : node.getName(),
+// 			}
+// 			func.inputs.push(inp);
+// 		})
+// 		var output = node.getOutput();
+// 		if(output){
+// 			var oup = {
+// 				id : output.getID(),
+// 				type : output.getType(),	
+// 				name : node.getName(),
+// 			}
+// 			func.output = oup;	
+// 		}
+// 		wf.push(func);
+// 	}
+
+// 	return JSON.stringify(wf);
+// }
 
 Graph.prototype.populateParentFunc = function(func, stack){
 	var that = this;

@@ -79,6 +79,16 @@ function initGraph(){
 	var conn_3_1  = g_graph.createEdge(output_1, func_3);
 	var conn_3_2  = g_graph.createEdge(output_2, func_3);
 	var conn_3_3  = g_graph.createEdge(func_3, output_3);
+
+	//设置值
+	input_1_1.setPath("/raster/fusion1_raster_1.tif");
+	input_1_2.setPath("/raster/fusion1_raster_2.tif");
+	output_1.setPath("/raster/fusion1_output_1.tif");
+
+	input_2_1.setPath("/raster/stretch/stretch_1.tif");
+	output_2.setPath("/raster/stretch/stretch_output_1.tif");
+
+	output_3.setPath("/raster/model/output.tif");
 }
 
 function initCanvasEvent(){
@@ -126,21 +136,16 @@ function initMenuEvents(){
 		g_graph.startConnecting();
 	})
 	$("#save").click(function(){
-		//g_graph.serialize();
-		//document.getElementById("result").innerHTML = g_graph.getWorkflowText();
-		//document.getElementById("result").innerHTML = g_graph.export();
-		g_dlg.show();
+		document.getElementById("result").innerHTML = g_graph.export();
 	})
 	$("#load").click(function(){
 		//alert("load");
-		g_dlg.close();
 	})
 	$("#run").click(function(){
-		//alert("run");
-		g_dlg.destory();
+		g_graph.serialize();
+		document.getElementById("result").innerHTML = g_graph.getWorkflowText();
+		
 	})
-
-
 
 	$("#adddata").click(function(){
 		g_graph.setState(GRAPH_STATE.ADDDATA);
