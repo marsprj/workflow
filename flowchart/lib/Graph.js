@@ -345,7 +345,7 @@ Graph.prototype.startSnapping = function(){
 	var nodes = nodeManger.getNodes();
 	nodes.forEach(function(n){
 		n.startSnapping();
-		n.startConnecting();
+		//n.startConnecting();
 	})
 }
 
@@ -354,7 +354,7 @@ Graph.prototype.stopSnapping = function(){
 	var nodes = nodeManger.getNodes();
 	nodes.forEach(function(n){
 		n.stopSnapping();
-		n.stopConnecting();
+		//n.stopConnecting();
 	})	
 }
 
@@ -485,7 +485,7 @@ Graph.prototype.stopConnecting = function(){
 	var nodeManger = NodeManager.getInstance();
 	var nodes = nodeManger.getNodes();
 	nodes.forEach(function(n){
-		n.stopConnecting();
+		//n.stopConnecting();
 		n.stopSnapping();
 	})
 
