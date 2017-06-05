@@ -38,6 +38,9 @@ var Graph = function(container_id){
 	this._onmousemove = null;
 	this._onmouseup   = null;
 
+	this._nodeManager = new NodeManager();
+	this._connManager = new ConnectionManager();
+
 	this.initCanvasEvent();
 
 	var that = this;
@@ -58,7 +61,7 @@ Graph.prototype.initCanvasEvent = function(){
 
 		}
 		else{
-			var nodeManager = NodeManager.getInstance();
+			//var nodeManager = NodeManager.getInstance();
 			switch(g_graph.getState()){
 				case GRAPH_STATE.ADDDATA:{
 					var node = graph.createDatumNode(x, y);
@@ -119,18 +122,33 @@ Graph.prototype.export = function(){
 	 * 	  			 一些参数，例如buffer需要设置半径
 	 * @type {Object}
 	 */
-	var model = {
-		name : "this model",
-		functions:[{
-			input : []
-		}
-		],
-		data:[
-		],
-		model:{
+	// var model = {
+	// 	name : "this model",
+	// 	functions:[{
+	// 		id : "1",
+	// 		name : "stretch",
+	// 		inputs : [	//Data 节点的ID集合
 
-		}
-	};
+	// 		]
+	// 	}],
+	// 	data:[
+	// 	],
+	// 	connections:{
+
+	// 	}
+	// };
+	
+	var model = {
+		name : "",
+		functions : [
+		],
+		data : [
+		],
+		connections:[
+		]
+	}
+
+	
 
 	return JSON.stringify(model);
 }
@@ -237,8 +255,9 @@ Graph.prototype.undrag = function(){
 }
 
 Graph.prototype.getEdges = function(){
-	var edgeManager = ConnectionManager.getInstance();
-	return edgeManager.getConnections();
+	//var edgeManager = ConnectionManager.getInstance();
+	//return edgeManager.getConnections();
+	return this._connManager.getConnections();
 }
 
 Graph.prototype.createDatumNode = function(centerx, centery, width, height){
@@ -248,8 +267,9 @@ Graph.prototype.createDatumNode = function(centerx, centery, width, height){
 	var xmin = centerx - w / 2;
 	var ymin = centery - h / 2;
 
-	var nodeManager = NodeManager.getInstance();
-	var datum = nodeManager.createDataNode(this._r, xmin, ymin, w, h);
+	//var nodeManager = NodeManager.getInstance();
+	//var datum = nodeManager.createDataNode(this._r, xmin, ymin, w, h);
+	var datum = this._nodeManager.createDataNode(this._r, xmin, ymin, w, h);
 
 	if(this._dragging){
 		datum.draggable();
@@ -272,8 +292,9 @@ Graph.prototype.createFuncNode = function(type, centerx, centery, width, height)
 	var xmin = centerx - w / 2;
 	var ymin = centery - h / 2;
 
-	var nodeManager = NodeManager.getInstance();
-	var func = nodeManager.createFuncNode(type, this._r, xmin, ymin, w, h);
+	//var nodeManager = NodeManager.getInstance();
+	//var func = nodeManager.createFuncNode(type, this._r, xmin, ymin, w, h);
+	var func = this._nodeManager.createFuncNode(type, this._r, xmin, ymin, w, h);
 
 	if(this._dragging){
 		func.draggable();
@@ -308,13 +329,15 @@ Graph.prototype.createFuncNode = function(type, centerx, centery, width, height)
 Graph.prototype.getFunctions = function(){
 	// var funcManager = FuncManager.getInstance();
 	// return funcManager.getNodes();
-	var nodeManager = NodeManager.getInstance();
-	return nodeManager.getFuncNodes();
+	//var nodeManager = NodeManager.getInstance();
+	//return nodeManager.getFuncNodes();
+	return this._nodeManager.getFuncNodes();
 }
 
 Graph.prototype.createEdge = function(from, to){
-	var edgeManager = ConnectionManager.getInstance();
-	var edge = edgeManager.createConnection(this._r, from, to);
+	//var edgeManager = ConnectionManager.getInstance();
+	//var edge = edgeManager.createConnection(this._r, from, to);
+	var edge = this._connManager.createConnection(this._r, from, to);
 
 	switch(from.getType()){
 		case NODE_TYPE.DATA:{
@@ -341,8 +364,9 @@ Graph.prototype.createEdge = function(from, to){
 }
 
 Graph.prototype.startSnapping = function(){
-	var nodeManger = NodeManager.getInstance();
-	var nodes = nodeManger.getNodes();
+	//var nodeManger = NodeManager.getInstance();
+	//var nodes = nodeManger.getNodes();
+	var nodes = this._nodeManger.getNodes();
 	nodes.forEach(function(n){
 		n.startSnapping();
 		//n.startConnecting();
@@ -350,8 +374,9 @@ Graph.prototype.startSnapping = function(){
 }
 
 Graph.prototype.stopSnapping = function(){
-	var nodeManger = NodeManager.getInstance();
-	var nodes = nodeManger.getNodes();
+	//var nodeManger = NodeManager.getInstance();
+	//var nodes = nodeManger.getNodes();
+	var nodes = this._nodeManger.getNodes();
 	nodes.forEach(function(n){
 		n.stopSnapping();
 		//n.stopConnecting();
@@ -382,8 +407,9 @@ Graph.prototype.startConnecting = function(){
 	this.startSnapping();
 	// start node connecting
 	var that = this;
-	var nodeManger = NodeManager.getInstance();
-	var nodes = nodeManger.getNodes();
+	//var nodeManger = NodeManager.getInstance();
+	//var nodes = nodeManger.getNodes();
+	var nodes = this._nodeManger.getNodes();
 	nodes.forEach(function(n){
 		n.startSnapping();
 		n.startConnecting(that._onNodeSelectChanged);
@@ -449,9 +475,12 @@ Graph.prototype.startConnecting = function(){
 					that._connection.remove();
 					that._end_node = node;				
 					
-					var conManager = ConnectionManager.getInstance();
-					var id = conManager.makeID(that._start_node, that._end_node);
-					var c = conManager.getConnectionById(id);
+					//var conManager = ConnectionManager.getInstance();
+					//var id = conManager.makeID(that._start_node, that._end_node);
+					//var c = conManager.getConnectionById(id);
+					//
+					var id = this._connManager.makeID(that._start_node, that._end_node);
+					var c = this._connManager.getConnectionById(id);
 					if(c){
 						alert("连接已经存在，不能重复添加");
 					}
@@ -482,8 +511,9 @@ Graph.prototype.startConnecting = function(){
 Graph.prototype.stopConnecting = function(){
 	this.stopSnapping();
 	// stop node connecting
-	var nodeManger = NodeManager.getInstance();
-	var nodes = nodeManger.getNodes();
+	//var nodeManger = NodeManager.getInstance();
+	//var nodes = nodeManger.getNodes();
+	var nodes = this._nodeManger.getNodes();
 	nodes.forEach(function(n){
 		//n.stopConnecting();
 		n.stopSnapping();

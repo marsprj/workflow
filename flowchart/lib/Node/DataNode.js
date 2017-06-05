@@ -82,6 +82,13 @@ DataNode.prototype.offset = function(dx, dy){
 	}
 }
 
+Node.prototype.export = function(){
+	return {
+		id : this._id,
+		path : this._path
+	};
+}
+
 // DataNode.prototype.draggable = function(){
 
 // 	// var ox, oy;

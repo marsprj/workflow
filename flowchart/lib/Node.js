@@ -112,6 +112,10 @@ Node.prototype.stopSnapping = function(){
 	}
 }
 
+Node.prototype.export = function(){
+	return "";
+}
+
 // Node.prototype.startConnecting = function(onSelectChanged){
 // 	var that = this;
 // 	var oncallback = function(obj){
