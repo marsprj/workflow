@@ -435,13 +435,13 @@ Shape.prototype.startConnecting = function(onSelectChanged){
 // 	);
 // }
 
-Shape.prototype.stopConnecting = function(){
-	var that = this;
-	this._shape.unhover(
-		that._connection_listener.in,
-		that._connection_listener.ou,
-	);
-}
+// Shape.prototype.stopConnecting = function(){
+// 	var that = this;
+// 	this._shape.unhover(
+// 		that._connection_listener.in,
+// 		that._connection_listener.ou,
+// 	);
+// }
 
 Shape.prototype.dblclick = function(f){
 	if(this._shape){
