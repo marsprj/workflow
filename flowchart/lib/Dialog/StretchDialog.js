@@ -7,18 +7,20 @@
 	this.setInput(input);
 	this.setOutput(output);
 
+	this.initFolderEvent();
+
 	this._onOK = onOK;
 }
 
 extend(StretchDialog, Dialog)
 
-StretchDialog.prototype.initEvents = function(){
+// StretchDialog.prototype.initEvents = function(){
 	
-	//打开文件的点击事件
-	this.initFolderEvent();
-	this.initCloseEvent();
-	this.initOkEvent();
-}
+// 	//打开文件的点击事件
+// 	this.initFolderEvent();
+// 	this.initCloseEvent();
+// 	this.initOkEvent();
+// }
 
 
 StretchDialog.prototype.initFolderEvent = function(){

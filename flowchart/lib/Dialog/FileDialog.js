@@ -7,18 +7,20 @@ var FileDialog = function(path, onOK){
 
 	this.setPath(path ? path : "/");
 	this.populateFolders();
+
+	this.initUpwardEvent();
 }
 
 extend(FileDialog, Dialog)
 
-FileDialog.prototype.initEvents = function(){
+// FileDialog.prototype.initEvents = function(){
 	
-	//打开文件的点击事件
-	this.initUpwardEvent();
-	this.initFileEvent();
-	this.initCloseEvent();
-	this.initOkEvent();
-}
+// 	//打开文件的点击事件
+// 	this.initUpwardEvent();
+// 	this.initFileEvent();
+// 	this.initCloseEvent();
+// 	this.initOkEvent();
+// }
 
 
 FileDialog.prototype.initUpwardEvent = function(){
@@ -93,7 +95,7 @@ FileDialog.prototype.setPath = function(path){
 		folder = path;
 	}
 	else{
-		folder = path.substring(0, path.lastIndexOf("/"));
+		folder = path.substring(0, path.lastIndexOf("/")+1);
 	}
 	$(".dialog_folder_path").attr("value", folder);
 }

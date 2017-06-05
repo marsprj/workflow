@@ -6,10 +6,21 @@ var FusionDialog = function(inputs, outout, onOK){
 	this.setOutput(output);
 	this.setOutput(output);
 
+	this.initFolderEvent();
+
 	this._onOK = onOK;
 }
 
 extend(FusionDialog, Dialog)
+
+// FusionDialog.prototype.initEvents = function(){
+	
+// 	//打开文件的点击事件
+// 	this.initFolderEvent();
+// 	this.initCloseEvent();
+// 	this.initOkEvent();
+// }
+
 
 FusionDialog.prototype.setInputs = function(inputs){
 	if(!inputs){
@@ -47,15 +58,6 @@ FusionDialog.prototype.setOutput = function(output){
 	this._output = output;
 	this._win.find('#fusion_output').attr("value", output);
 }
-
-FusionDialog.prototype.initEvents = function(){
-	
-	//打开文件的点击事件
-	this.initFolderEvent();
-	this.initCloseEvent();
-	this.initOkEvent();
-}
-
 
 FusionDialog.prototype.initFolderEvent = function(){
 

@@ -2,7 +2,8 @@ var Dialog = function(){
 
 	this._ok = false;
 	this._win = this.create();
-	this.initEvents();
+
+	this.initDialogEvents();
 }
 
 Dialog.prototype.show = function(){
@@ -17,10 +18,10 @@ Dialog.prototype.destory = function(){
 	$(this._win).remove();
 }
 
-Dialog.prototype.initEvents = function(){
-	// this.initFolderEvent();
-	// this.initCloseEvent();
-	// this.initOkEvent();
+Dialog.prototype.initDialogEvents = function(){
+	//this.initFolderEvent();
+	this.initCloseEvent();
+	this.initOkEvent();
 }
 
 Dialog.prototype.isOK = function(){
