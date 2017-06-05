@@ -38,6 +38,8 @@ var Graph = function(container_id){
 	this._onmousemove = null;
 	this._onmouseup   = null;
 
+	this.initCanvasEvent();
+
 	var that = this;
 	this._onNodeSelectChanged = function(node){
 		that._selected_node = node;
@@ -45,6 +47,34 @@ var Graph = function(container_id){
 		console.log("[nde]:" + (node ? node.getID() : "nothing"));
 	};
 }
+
+Graph.prototype.initCanvasEvent = function(){
+	var graph = this;
+	$("#" + this._container_id).dblclick(function(evt){
+		var x = evt.offsetX;
+		var y = evt.offsetY;
+		var target = graph._r.getElementByPoint(evt.pageX,evt.pageY);
+		if(target){
+
+		}
+		else{
+			var nodeManager = NodeManager.getInstance();
+			switch(g_graph.getState()){
+				case GRAPH_STATE.ADDDATA:{
+					var node = graph.createDatumNode(x, y);
+				}
+				break;
+				case GRAPH_STATE.ADDFUNC:{
+					if(g_func_type){
+						var node = graph.createFuncNode(g_func_type, x, y);	
+					}
+					
+				}
+			}
+		}
+	})
+}
+
 
 Graph.prototype.getState = function(){
 	return this._state;

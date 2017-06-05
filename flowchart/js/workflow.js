@@ -48,7 +48,6 @@ $().ready(function(){
 	loadFunctions();
 	initMenuEvents();
 	initNodeEvents();
-	initCanvasEvent();
 
 	initGraph();
 
@@ -89,29 +88,6 @@ function initGraph(){
 	output_2.setPath("/raster/stretch/stretch_output_1.tif");
 
 	output_3.setPath("/raster/model/output.tif");
-}
-
-function initCanvasEvent(){
-	$("#canvas").dblclick(function(evt){
-		var x = evt.offsetX;
-		var y = evt.offsetY;
-		var nodeManager = NodeManager.getInstance();
-		switch(g_graph.getState()){
-			case GRAPH_STATE.ADDDATA:{
-				var node = g_graph.createDatumNode(x, y);
-			}
-			break;
-			case GRAPH_STATE.ADDFUNC:{
-				if(g_func_type){
-					var node = g_graph.createFuncNode(g_func_type, x, y);	
-				}
-				
-			}
-		}
-	})
-	// $("#canvas").mousemove(function(evt){
-	// 	console.log(evt.offsetX);
-	// })
 }
 
 function initMenuEvents(){
