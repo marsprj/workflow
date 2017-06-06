@@ -448,3 +448,12 @@ Shape.prototype.dblclick = function(f){
 		this._shape.dblclick(f);
 	}
 }
+
+Shape.prototype.remove = function(){
+	if(this._shape){
+		this._shape.remove();
+	}
+	if(this._text){
+		this._text.remove();	
+	}
+}

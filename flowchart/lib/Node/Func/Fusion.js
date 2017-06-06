@@ -39,6 +39,8 @@ var Fusion = function(){
 	});
 }
 
+extend(Fusion, FuncNode);
+
 Fusion.prototype.updateInputNode1 = function(path){
 
 	var conn = this._inputs[0];
@@ -62,4 +64,31 @@ Fusion.prototype.updateInputNode2 = function(path){
 	
 }
 
-extend(Fusion, FuncNode);
+
+Fusion.prototype.export = function(){
+	var obj = {
+		id : this.getID(),
+		name : this._name,
+		inputs : [
+		],
+		output : {
+			id : ""
+		}
+	}
+
+	var inputs = this.getInputs();
+	if(inputs){
+		inputs.forEach(function(v){
+			if(v){
+				obj.inputs.push({
+					id : v.getID()
+				});
+			}
+		});
+	}
+	var output = this.getOutput();
+	if(output){
+		obj.output.id = output.getID()
+	}
+	return obj;
+}

@@ -11,8 +11,8 @@ var Connection = function(r, startx, starty, endx, endy){
 	this._r = r;
 	this._arrow = new Arrow(r, startx, starty, endx, endy);
 
-	this._from = null;
-	this._to   = null;
+	this._from = null;	//Node
+	this._to   = null;	//Node
 }
 
 Connection.prototype.getID = function(){
@@ -65,5 +65,16 @@ Connection.prototype.offsetEnd = function(dx, dy){
 Connection.prototype.remove = function(){
 	if(this._arrow){
 		this._arrow.remove();
+	}
+}
+
+Connection.prototype.export = function(){
+
+	var from = this._from ? this._from.getID() : "";
+	var to   = this._to   ? this._to.getID()   : "";
+
+	return {
+		from : from,
+		to 	 : to
 	}
 }

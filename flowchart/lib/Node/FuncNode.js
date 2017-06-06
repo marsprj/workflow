@@ -6,7 +6,7 @@ var FuncNode = function(r, xmin, ymin, width, height){
 	this._type = "function";
 	this._name = "function";
 
-	this._inputs = [];
+	this._inputs = [];	//Connection;
 	this._output = null;
 
 	this._shape = new Rect(r, xmin, ymin, width, height);
@@ -59,6 +59,23 @@ FuncNode.prototype.getOutput = function(){
 	return null;
 }
 
+FuncNode.prototype.export = function(){
+	// var obj = {
+	// 	name : "Fusion",
+	// 	inputs : [{
+	// 		id : "vyzhx"	//DataNode节点ID
+	// 	}],
+	// 	output : {
+	// 		id : "5brwc"	//DataNode节点ID
+	// 	}
+	// 	params : [{			//参数集合
+	// 		key: "radius",
+	// 		value : 4.5
+	// 	}]
+	// }
+
+	// return obj;
+}
 
 FuncNode.prototype.offset = function(dx, dy){
 	if(this._shape){

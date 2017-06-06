@@ -74,6 +74,14 @@ ConnectionManager.prototype.makeID = function(from, to){
 	return null;
 }
 
+ConnectionManager.prototype.clear = function(){
+	this._connections.forEach(function(c){
+		c.remove();
+	})
+
+	this._connections.length = 0;
+}
+
 ConnectionManager.getInstance = function(){
 	if(this._instance==null){
 		this._instance = new ConnectionManager();

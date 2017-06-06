@@ -116,6 +116,7 @@ function initMenuEvents(){
 	})
 	$("#load").click(function(){
 		//alert("load");
+		loadGraph();		
 	})
 	$("#run").click(function(){
 		g_graph.serialize();
@@ -151,4 +152,10 @@ function loadFunctions(){
 		html += "</div>";
 	})
 	document.getElementById("func_container").innerHTML = html;
+}
+
+function loadGraph(){
+
+	var text = '{"name":"my model","functions":[{"id":"dflgo","name":"Fusion","inputs":[{"id":"wyfzh"},{"id":"dwqe4"}],"output":{"id":"zbcqk"}},{"id":"4tgfo","name":"Stretch","inputs":[{"id":"4f152"}],"output":{"id":"ryqdc"}},{"id":"5fa6f","name":"Fusion","inputs":[{"id":"zbcqk"},{"id":"ryqdc"}],"output":{"id":"nwyes"}}],"data":[{"id":"wyfzh","path":"/raster/fusion1_raster_1.tif"},{"id":"dwqe4","path":"/raster/fusion1_raster_2.tif"},{"id":"zbcqk","path":"/raster/fusion1_output_1.tif"},{"id":"4f152","path":"/raster/stretch/stretch_1.tif"},{"id":"ryqdc","path":"/raster/stretch/stretch_output_1.tif"},{"id":"nwyes","path":"/raster/model/output.tif"}],"connections":[{"from":"wyfzh","to":"dflgo"},{"from":"dwqe4","to":"dflgo"},{"from":"dflgo","to":"zbcqk"},{"from":"4f152","to":"4tgfo"},{"from":"4tgfo","to":"ryqdc"},{"from":"zbcqk","to":"5fa6f"},{"from":"ryqdc","to":"5fa6f"},{"from":"5fa6f","to":"nwyes"}]}';
+	g_graph.load(text);	
 }

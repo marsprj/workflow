@@ -116,6 +116,12 @@ Node.prototype.export = function(){
 	return "";
 }
 
+Node.prototype.remove = function(){
+	if(this._shape){
+		this._shape.remove();
+	}
+}
+
 // Node.prototype.startConnecting = function(onSelectChanged){
 // 	var that = this;
 // 	var oncallback = function(obj){

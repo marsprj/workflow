@@ -93,6 +93,13 @@ NodeManager.prototype.getNodes = function(){
 	return this._nodes;
 }
 
+NodeManager.prototype.clear = function(){
+	this._nodes.forEach(function(n){
+		n.remove();
+	});
+	this._nodes.length = 0;
+}
+
 NodeManager.getInstance = function(){
 	if(this._instance==null){
 		this._instance = new NodeManager();

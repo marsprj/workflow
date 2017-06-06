@@ -54,3 +54,31 @@ Stretch.prototype.updateOutputNode = function(path){
 		}
 	}	
 }
+
+Stretch.prototype.export = function(){
+	var obj = {
+		id : this.getID(),
+		name : this._name,
+		inputs : [
+		],
+		output : {
+			id : ""
+		}
+	}
+
+	var inputs = this.getInputs();
+	if(inputs){
+		inputs.forEach(function(v){
+			if(v){
+				obj.inputs.push({
+					id : v.getID()
+				});
+			}
+		});
+	}
+	var output = this.getOutput();
+	if(output){
+		obj.output.id = output.getID()
+	}
+	return obj;
+}

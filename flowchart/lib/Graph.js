@@ -98,48 +98,68 @@ Graph.prototype.serialize = function(){
 	this.populateParentFunc(tail, this._workflow);
 }
 
-Graph.prototype.load = function(model){
+Graph.prototype.load = function(json){
 
-	//
+	var model = JSON.parse(json);
 
+	if(!model){
+		return false;
+	}
+
+	var findNodeByID = function(data, funcs, id){
+		var target = null;
+		var count = data.length;
+		for(var i=0; i<count; i++){
+			var n = data[i];
+			if(n.id == id){
+				target = n;
+				break;
+			}
+		}
+		if(target){
+			return target;
+		}
+
+		var count = funcs.length;
+		for(var i=0; i<count; i++){
+			var n = funcs[i];
+			if(n.id == id){
+				target = n;
+				break;
+			}
+		}
+
+		return target;
+	}
+
+	this.clear();
+	var graph = this;
+	model.data.forEach(function(d){
+		d.node = graph.createDatumNode(50, 50, 100, 50);
+		d.node.setPath(d.path);
+	});
+
+	model.functions.forEach(function(f){
+		f.node = graph.createFuncNode(f.name, 200, 300, 100, 50);
+	});
+
+	model.connections.forEach(function(c){
+		var from = findNodeByID(model.data, model.functions, c.from);
+		var to   = findNodeByID(model.data, model.functions, c.to);
+		if(from && to){
+			graph.createEdge(from.node, to.node);
+		}
+	});
+
+	return true;
 }
 
 Graph.prototype.export = function(){
 	
 	var tail = this.findLastFunction();
-
-	/**
-	 * 1. model由一系列的function构成
-	 * 2. 每个function由三个参数构成
-	 * 	  1) inputs: 输入
-	 * 	  	         输入是一个集合，一个function可能有多个input
-	 * 	  	         input有两个来源
-	 * 	  	         <1> function的输出
-	 * 	  	         <2> data本身
-	 * 	  2) output: 输出
-	 * 	  			 一个Data节点
-	 * 	  3) params: 参数
-	 * 	  			 一些参数，例如buffer需要设置半径
-	 * @type {Object}
-	 */
-	// var model = {
-	// 	name : "this model",
-	// 	functions:[{
-	// 		id : "1",
-	// 		name : "stretch",
-	// 		inputs : [	//Data 节点的ID集合
-
-	// 		]
-	// 	}],
-	// 	data:[
-	// 	],
-	// 	connections:{
-
-	// 	}
-	// };
 	
 	var model = {
-		name : "",
+		name : "my model",
 		functions : [
 		],
 		data : [
@@ -148,7 +168,23 @@ Graph.prototype.export = function(){
 		]
 	}
 
-	
+	var functions = this._nodeManager.getFuncNodes();
+	functions.forEach(function(f){
+		var obj = f.export();
+		model.functions.push(obj);
+	});
+
+	var data = this._nodeManager.getDataNodes();
+	data.forEach(function(d){
+		var obj = d.export();
+		model.data.push(obj);
+	})
+
+	var connections = this._connManager.getConnections();
+	connections.forEach(function(c){
+		var obj = c.export();
+		model.connections.push(obj);
+	})
 
 	return JSON.stringify(model);
 }
@@ -363,10 +399,15 @@ Graph.prototype.createEdge = function(from, to){
 	return edge;
 }
 
+Graph.prototype.clear = function(){	
+	this._connManager.clear();
+	this._nodeManager.clear();
+}
+
 Graph.prototype.startSnapping = function(){
 	//var nodeManger = NodeManager.getInstance();
 	//var nodes = nodeManger.getNodes();
-	var nodes = this._nodeManger.getNodes();
+	var nodes = this._nodeManager.getNodes();
 	nodes.forEach(function(n){
 		n.startSnapping();
 		//n.startConnecting();
@@ -376,7 +417,7 @@ Graph.prototype.startSnapping = function(){
 Graph.prototype.stopSnapping = function(){
 	//var nodeManger = NodeManager.getInstance();
 	//var nodes = nodeManger.getNodes();
-	var nodes = this._nodeManger.getNodes();
+	var nodes = this._nodeManager.getNodes();
 	nodes.forEach(function(n){
 		n.stopSnapping();
 		//n.stopConnecting();
@@ -409,7 +450,7 @@ Graph.prototype.startConnecting = function(){
 	var that = this;
 	//var nodeManger = NodeManager.getInstance();
 	//var nodes = nodeManger.getNodes();
-	var nodes = this._nodeManger.getNodes();
+	var nodes = this._nodeManager.getNodes();
 	nodes.forEach(function(n){
 		n.startSnapping();
 		n.startConnecting(that._onNodeSelectChanged);
@@ -513,7 +554,7 @@ Graph.prototype.stopConnecting = function(){
 	// stop node connecting
 	//var nodeManger = NodeManager.getInstance();
 	//var nodes = nodeManger.getNodes();
-	var nodes = this._nodeManger.getNodes();
+	var nodes = this._nodeManager.getNodes();
 	nodes.forEach(function(n){
 		//n.stopConnecting();
 		n.stopSnapping();
