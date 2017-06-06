@@ -520,8 +520,8 @@ Graph.prototype.startConnecting = function(){
 					//var id = conManager.makeID(that._start_node, that._end_node);
 					//var c = conManager.getConnectionById(id);
 					//
-					var id = this._connManager.makeID(that._start_node, that._end_node);
-					var c = this._connManager.getConnectionById(id);
+					var id = that._connManager.makeID(that._start_node, that._end_node);
+					var c = that._connManager.getConnectionById(id);
 					if(c){
 						alert("连接已经存在，不能重复添加");
 					}
@@ -530,7 +530,7 @@ Graph.prototype.startConnecting = function(){
 						that._connection = new Connection(that._r, that._conn_start.x, that._conn_start.y
 														 	 	 , that._conn_end.x,   that._conn_end.y);
 						that._connection.setEnds(that._start_node, that._end_node);
-						conManager.add(that._connection);
+						that._connManager.add(that._connection);
 					}
 				}
 			}else{

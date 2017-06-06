@@ -122,20 +122,20 @@ Node.prototype.remove = function(){
 	}
 }
 
-// Node.prototype.startConnecting = function(onSelectChanged){
-// 	var that = this;
-// 	var oncallback = function(obj){
-// 		if(onSelectChanged){
-// 			onSelectChanged( obj ? that : null);
-// 		}
-// 	}
-// 	if(this._shape){
-// 		this._shape.startConnecting(oncallback);
-// 	}
-// }
+Node.prototype.startConnecting = function(onSelectChanged){
+	var that = this;
+	var oncallback = function(obj){
+		if(onSelectChanged){
+			onSelectChanged( obj ? that : null);
+		}
+	}
+	if(this._shape){
+		this._shape.startConnecting(oncallback);
+	}
+}
 
-// Node.prototype.stopConnecting = function(){
-// 	if(this._shape){
-// 		this._shape.stopConnecting();
-// 	}
-// }
+Node.prototype.stopConnecting = function(){
+	if(this._shape){
+		this._shape.stopConnecting();
+	}
+}
