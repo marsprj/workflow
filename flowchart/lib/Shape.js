@@ -1,6 +1,6 @@
 var Shape = function(r){
 	this._r = r;
-	this._shape = null;
+	this._shape = null;	//Raphael.Element
 	this._text  = null;
 
 	this._xmin = 0;

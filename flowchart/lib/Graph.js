@@ -317,8 +317,8 @@ Graph.prototype.createDatumNode = function(centerx, centery, width, height){
 Graph.prototype.getData = function(){
 	// var datumManager = NodeManager.getInstance();
 	// return datumManager.getNodes();
-	var nodeManager = NodeManager.getInstance();
-	return nodeManager.getDataNodes();
+	//var nodeManager = NodeManager.getInstance();
+	return this._nodeManager.getDataNodes();
 }
 
 Graph.prototype.createFuncNode = function(type, centerx, centery, width, height){
